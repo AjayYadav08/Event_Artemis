@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, X, ChevronLeft, ChevronRight, Sparkles, Bot } from 'lucide-react';
+import { Calendar as CalendarIcon, X, ChevronLeft, ChevronRight, Sparkles, Bot, Maximize2 } from 'lucide-react';
 
 interface MiniFloatingCalendarProps {
   isOpen: boolean;
@@ -15,6 +15,7 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
   selectedDate, 
   setSelectedDate 
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   const currentMonthDays = Array.from({ length: 31 }, (_, i) => i + 1);
   const startOffset = 3; // Mocking January 2026 starts on Thursday (index 4) - simplified offset
@@ -43,7 +44,9 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
       <div 
         className={`pointer-events-auto bg-white/95 backdrop-blur-2xl border border-blue-100/80 rounded-[32px] shadow-[0_30px_80px_-20px_rgba(37,99,235,0.35)] overflow-hidden mb-6 transition-all origin-bottom-right relative will-change-transform ring-4 ring-white/50 ${
           isOpen 
-            ? 'w-[340px] opacity-100 scale-100 translate-y-0 duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]' 
+            ? isExpanded 
+              ? 'w-[600px] h-[700px] opacity-100 scale-100 translate-y-0 duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]'
+              : 'w-[340px] opacity-100 scale-100 translate-y-0 duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]'
             : 'w-[340px] h-[100px] opacity-0 scale-50 translate-y-24 pointer-events-none duration-150 ease-in'
         }`}
       >
@@ -58,9 +61,19 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
             <div>
               <div className="flex items-center gap-2 mb-1.5">
                  <h4 className="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 shadow-sm">January 2026</h4>
+                 {isOpen && (
+                    <button 
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 shadow-sm hover:bg-blue-100 transition-colors flex items-center gap-1"
+                      title={isExpanded ? "Collapse" : "Expand"}
+                    >
+                      <Maximize2 className="w-3 h-3" />
+                      {isExpanded ? "Collapse" : "Expand"}
+                    </button>
+                 )}
               </div>
               <p className="text-xs font-bold text-slate-800 mt-1 flex items-center gap-1">
-                 Selection Mode <span className="text-base animate-pulse">⚡️</span>
+                 {isExpanded ? "Detailed View" : "Selection Mode"} <span className="text-base animate-pulse">⚡️</span>
               </p>
             </div>
             
@@ -80,17 +93,17 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
 
           <div className="flex items-center justify-between mb-4 px-1 bg-slate-50/80 p-1.5 rounded-2xl border border-slate-100">
             <button className="w-8 h-8 flex items-center justify-center bg-white rounded-xl text-slate-400 hover:text-blue-600 transition-all shadow-sm hover:shadow-md border border-transparent hover:border-blue-100"><ChevronLeft className="w-4 h-4" /></button>
-            <span className="text-[10px] font-black text-slate-500 tracking-[0.2em] uppercase">Select Day</span>
+            <span className="text-[10px] font-black text-slate-500 tracking-[0.2em] uppercase">{isExpanded ? "Full Calendar View" : "Select Day"}</span>
             <button className="w-8 h-8 flex items-center justify-center bg-white rounded-xl text-slate-400 hover:text-blue-600 transition-all shadow-sm hover:shadow-md border border-transparent hover:border-blue-100"><ChevronRight className="w-4 h-4" /></button>
           </div>
 
-          <div className="grid grid-cols-7 gap-2 mb-3">
+          <div className={`grid gap-2 mb-3 ${isExpanded ? 'grid-cols-7' : 'grid-cols-7'}`}>
             {daysOfWeek.map(day => (
-              <div key={day} className="h-6 flex items-center justify-center text-[10px] font-black text-slate-300 uppercase">{day}</div>
+              <div key={day} className={`flex items-center justify-center text-[10px] font-black text-slate-300 uppercase ${isExpanded ? 'h-8' : 'h-6'}`}>{day}</div>
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-1.5 mb-6">
+          <div className={`grid gap-1.5 mb-6 flex-1 overflow-y-auto ${isExpanded ? 'grid-cols-7 pr-2' : 'grid-cols-7'}`}>
             {Array.from({ length: startOffset }).map((_, i) => (
               <div key={`off-${i}`} className="h-9" />
             ))}
@@ -100,7 +113,9 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
                 <button
                   key={day}
                   onClick={() => setSelectedDate(isActive ? null : day)}
-                  className={`h-9 w-full flex items-center justify-center rounded-xl text-[11px] font-bold transition-all relative group ${
+                  className={`flex items-center justify-center rounded-xl text-[11px] font-bold transition-all relative group ${
+                    isExpanded ? 'h-12' : 'h-9'
+                  } ${
                     isActive 
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40 scale-110 z-10 ring-2 ring-white' 
                       : 'text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:scale-110 hover:shadow-sm hover:z-10'

@@ -17,7 +17,9 @@ import {
   Plus,
   ArrowRight,
   Ticket,
-  Medal
+  Medal,
+  BarChart3,
+  MessageSquare
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -44,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, unope
             <Layout className="w-5 h-5 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-slate-900 tracking-tight text-sm leading-tight">Newton School of Technology</span>
+            <span className="font-black text-slate-900 tracking-tight text-sm leading-tight">Event Artemis</span>
             <span className="text-[9px] text-slate-400 font-bold tracking-[0.1em] mt-1">V3.0 PLATFORM</span>
           </div>
         </div>
@@ -110,78 +112,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, unope
           <button 
             className="flex items-center w-full px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl transition-all group mt-1"
           >
-            <Ticket className="w-5 h-5 mr-3 text-slate-400 group-hover:text-slate-600" />
-            <span className="text-sm">My Bookings</span>
+            <BarChart3 className="w-5 h-5 mr-3 text-slate-400 group-hover:text-slate-600" />
+            <span className="text-sm">Leaderboard</span>
           </button>
 
           <button 
             className="flex items-center w-full px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-2xl transition-all group"
           >
-            <Medal className="w-5 h-5 mr-3 text-slate-400 group-hover:text-slate-600" />
-            <span className="text-sm">Hall of Fame</span>
+            <MessageSquare className="w-5 h-5 mr-3 text-slate-400 group-hover:text-slate-600" />
+            <span className="text-sm">Help & Support</span>
           </button>
-        </div>
-
-        {/* Section: ACADEMICS */}
-        <div className="pt-8 pb-2">
-          <div className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Academics</div>
-        </div>
-        
-        <div className="space-y-1">
-          <button 
-            onClick={() => setActiveTab('Calendar')}
-            className={`flex items-center w-full px-4 py-3 rounded-2xl transition-all duration-300 group ${
-              activeTab === 'Calendar' 
-                ? 'bg-blue-50 text-blue-600 shadow-sm ring-1 ring-blue-100 font-bold' 
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-            }`}
-          >
-            <Calendar className={`w-5 h-5 mr-3 transition-colors ${activeTab === 'Calendar' ? 'text-blue-500' : 'text-slate-400 group-hover:text-slate-600'}`} />
-            <span className="text-sm">Full Schedule</span>
-          </button>
-        </div>
-
-        <div className="pt-8 pb-2">
-          <div className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Activity Hub</div>
-        </div>
-        <div className="space-y-1">
-          {menuItems.map(item => (
-            <button 
-              key={item.name}
-              onClick={() => setActiveTab(item.name)}
-              className={`group flex items-center justify-between w-full px-4 py-3 rounded-2xl transition-all ${
-                activeTab === item.name 
-                  ? 'bg-slate-100 text-slate-900 font-bold' 
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-              }`}
-            >
-              <div className="flex items-center">
-                <item.icon className={`w-5 h-5 mr-3 transition-colors ${activeTab === item.name ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-600'}`} />
-                <span className="text-sm">{item.name}</span>
-              </div>
-            </button>
-          ))}
         </div>
       </div>
 
       {/* Bottom Profile */}
       <div className="p-6 border-t border-slate-100">
-        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-             <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center">
-                <Flame className="w-4 h-4 text-orange-500" />
-             </div>
-             <div>
-                <p className="text-[9px] font-black text-slate-400 uppercase leading-none">Streak</p>
-                <p className="text-xs font-bold text-slate-800">12 Days</p>
-             </div>
-          </div>
-          <ArrowRight className="w-4 h-4 text-slate-300" />
-        </div>
-        <button className="flex items-center justify-center w-full px-4 py-3 text-slate-500 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-700 rounded-xl transition-all text-xs font-bold shadow-sm">
-          <HelpCircle className="w-4 h-4 mr-2" />
-          NST Support
-        </button>
       </div>
     </aside>
   );

@@ -174,7 +174,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Speedsters",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 99887 76655", email: "flashcode@nst.edu" }
+    organizerContact: { phone: "+1 (555) 987-6543", email: "flash@artemis.events" }
   },
   {
     id: 'e_mumbai',
@@ -300,7 +300,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Advanced Cybersecurity Students",
     teamSize: "Individual Only",
     certification: false,
-    organizerContact: { phone: "+91 90000 11111", email: "security@nst.edu" }
+    organizerContact: { phone: "+1 (555) 555-7890", email: "security@artemis.events" }
   },
   {
     id: 'e2',
@@ -323,7 +323,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Beginners to Design",
     teamSize: "No Limit",
     certification: true,
-    organizerContact: { phone: "+91 88888 22222", email: "design.club@nst.edu" }
+    organizerContact: { phone: "+1 (555) 111-2222", email: "design@artemis.events" }
   },
   {
     id: 'e_fintech',
@@ -350,7 +350,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Quant Enthusiasts",
     teamSize: "1-3 Members",
     certification: true,
-    organizerContact: { phone: "+91 77777 33333", email: "fintech@nst.edu" }
+    organizerContact: { phone: "+1 (555) 333-4444", email: "fintech@artemis.events" }
   },
   {
     id: 'e_robowars',
@@ -377,7 +377,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Engineering Teams",
     teamSize: "4-6 Members",
     certification: true,
-    organizerContact: { phone: "+91 66666 44444", email: "robotics@nst.edu" },
+    organizerContact: { phone: "+1 (555) 444-5555", email: "robotics@artemis.events" },
     gallery: [
       "https://images.unsplash.com/photo-1563206767-5b1d972f9fb7?auto=format&fit=crop&q=80&w=1000",
       "https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&q=80&w=1000"
@@ -404,7 +404,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "CS Students",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 55555 55555", email: "rustacean@nst.edu" }
+    organizerContact: { phone: "+1 (555) 555-6666", email: "rust@artemis.events" }
   },
   {
     id: 'e_music',
@@ -427,7 +427,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Open for All",
     teamSize: "N/A",
     certification: false,
-    organizerContact: { phone: "+91 44444 66666", email: "cultural@nst.edu" }
+    organizerContact: { phone: "+1 (555) 666-7777", email: "cultural@artemis.events" }
   },
   {
     id: 'e_gamejam',
@@ -451,7 +451,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Game Devs",
     teamSize: "1-4 Members",
     certification: true,
-    organizerContact: { phone: "+91 33333 77777", email: "gamedev@nst.edu" }
+    organizerContact: { phone: "+1 (555) 777-8888", email: "gamedev@artemis.events" }
   },
   {
     id: 'e_blockchain',
@@ -474,7 +474,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Open for All",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 22222 88888", email: "web3@nst.edu" }
+    organizerContact: { phone: "+1 (555) 888-9999", email: "web3@artemis.events" }
   },
   {
     id: 'e_startup',
@@ -498,7 +498,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Student Founders",
     teamSize: "1-5 Members",
     certification: false,
-    organizerContact: { phone: "+91 11111 99999", email: "ecell@nst.edu" }
+    organizerContact: { phone: "+1 (555) 999-0000", email: "startup@artemis.events" }
   },
   {
     id: 'e_design',
@@ -522,7 +522,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Designers",
     teamSize: "2-3 Members",
     certification: true,
-    organizerContact: { phone: "+91 12121 21212", email: "design@nst.edu" }
+    organizerContact: { phone: "+1 (555) 001-1111", email: "design.sprint@artemis.events" }
   },
   {
     id: 'e_datascience',
@@ -545,7 +545,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Data Enthusiasts",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 34343 43434", email: "datascience@nst.edu" }
+    organizerContact: { phone: "+1 (555) 222-3333", email: "data@artemis.events" }
   },
   {
     id: 'e_drone',
@@ -569,7 +569,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "Licensed Pilots",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 56565 65656", email: "drones@nst.edu" }
+    organizerContact: { phone: "+1 (555) 444-6666", email: "drone@artemis.events" }
   },
   {
     id: 'e_cloud',
@@ -593,7 +593,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     eligibility: "CS Students",
     teamSize: "Individual",
     certification: true,
-    organizerContact: { phone: "+91 78787 87878", email: "cloud@nst.edu" }
+    organizerContact: { phone: "+1 (555) 555-7777", email: "cloud@artemis.events" }
   }
 ];
 
@@ -808,6 +808,18 @@ export const EventsPage: React.FC<EventsPageProps> = ({
     return "Just finished";
   };
 
+  // NEW: Format future countdown (for upcoming events)
+  const formatTimeUntil = (msDiff: number) => {
+    const seconds = Math.abs(msDiff) / 1000;
+    const minutes = seconds / 60;
+    const hours = minutes / 60;
+    const days = hours / 24;
+
+    if (days >= 1) return `Starting in ${Math.floor(days)} days`;
+    if (hours >= 1) return `Starting in ${Math.floor(hours)} hours`;
+    return "Starting soon";
+  };
+
   const tutorialSteps: TutorialStep[] = [
     {
       targetId: 'tour-calendar',
@@ -873,19 +885,22 @@ export const EventsPage: React.FC<EventsPageProps> = ({
               const diff = eventDate.getTime() - now.getTime();
               
               if (diff > (48 * 60 * 60 * 1000)) {
+                 // More than 48 hours away - show days remaining
                  const days = Math.ceil(diff / (24 * 60 * 60 * 1000));
-                 timeString = `${days} Days`;
+                 timeString = `${days} days left`;
                  isUrgent = false;
               } else if (diff < 0) {
+                 // Event has passed
                  timeString = formatTimeAgo(diff);
                  isUrgent = false;
                  isPast = true;
               } else {
+                 // Event is within 48 hours - show countdown timer
                  timeString = formatTimeDiff(diff);
                  isUrgent = true;
               }
             } else if (isPast) {
-               timeString = "Happened recently";
+               timeString = "Event ended";
                isUrgent = false;
             }
 
@@ -1013,6 +1028,17 @@ export const EventsPage: React.FC<EventsPageProps> = ({
           onComplete={handleTutorialComplete} 
         />
       )}
+
+      {/* Branding Header */}
+      <div className="px-4 pt-4 flex items-center gap-3">
+        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+          <span className="text-[18px] font-black text-white">⚡</span>
+        </div>
+        <div>
+          <h1 className="text-4xl font-black text-slate-900">Event Artemis</h1>
+          <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">Discover & Participate</p>
+        </div>
+      </div>
 
       {/* SPOTLIGHT SECTION */}
       <section className="relative w-full rounded-[48px] overflow-hidden bg-slate-900 aspect-[21/9] flex items-center group shadow-2xl">
@@ -1375,7 +1401,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                                   </div>
                                   <div>
                                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Official Email</span>
-                                     <span className="text-sm font-black text-slate-800">{exploringEvent.organizerContact?.email || "events@nst.edu"}</span>
+                                     <span className="text-sm font-black text-slate-800">{exploringEvent.organizerContact?.email || "events@artemis.events"}</span>
                                   </div>
                                </a>
                             </div>
