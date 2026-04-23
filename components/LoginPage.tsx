@@ -62,7 +62,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
 
           {/* Typography */}
           <h1 className="text-5xl font-black text-slate-900 tracking-tighter mb-4">
-             CampusPilot
+             Event Artemis
           </h1>
           
           <div className="flex items-center gap-3 mb-12 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/60 shadow-sm">

@@ -61,7 +61,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           <div className="flex flex-col items-start">
              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-0.5">Platform</span>
              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-slate-700 leading-none">Event Artemis</span>
+                <span className="text-sm font-bold text-slate-700 leading-none">Even t Artemis</span>
                 <ChevronDown className="w-3 h-3 text-slate-400 group-hover:translate-y-0.5 transition-transform" />
              </div>
           </div>

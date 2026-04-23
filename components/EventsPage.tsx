@@ -610,11 +610,34 @@ interface ImageWithFallbackProps {
   src: string;
   alt: string;
   className?: string;
+  fallbackSrc?: string;
 }
 
-const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ src, alt, className }) => {
+// Category-based default images
+const getCategoryDefaultImage = (category: string): string => {
+  const categoryImages: Record<string, string> = {
+    'Competition': 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000',
+    'Workshop': 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000',
+    'Fest': 'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?auto=format&fit=crop&q=80&w=1000',
+    'Seminar': 'https://images.unsplash.com/photo-1540575467063-178cb50ee898?auto=format&fit=crop&q=80&w=1000',
+  };
+  return categoryImages[category] || 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000';
+};
+
+const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ src, alt, className, fallbackSrc }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [primaryImageFailed, setPrimaryImageFailed] = useState(false);
+
+  const handleImageError = () => {
+    if (!primaryImageFailed && fallbackSrc) {
+      setPrimaryImageFailed(true);
+      setLoading(true);
+      setError(false);
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <div className={`relative overflow-hidden bg-slate-100 ${className}`}>
@@ -625,16 +648,16 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ src, alt, classNa
       )}
       {!error ? (
         <img 
-          src={src} 
+          src={primaryImageFailed && fallbackSrc ? fallbackSrc : src} 
           alt={alt} 
           className={`w-full h-full object-cover transition-all duration-700 ${loading ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}
           onLoad={() => setLoading(false)}
-          onError={() => setError(true)}
+          onError={handleImageError}
         />
       ) : (
-        <div className="flex flex-col items-center justify-center w-full h-full text-slate-400">
-          <ImageIcon className="w-10 h-10 opacity-10 mb-2" />
-          <span className="text-[9px] font-bold uppercase tracking-widest opacity-30">No Image</span>
+        <div className="flex flex-col items-center justify-center w-full h-full text-slate-400 bg-gradient-to-br from-slate-200 to-slate-300">
+          <ImageIcon className="w-10 h-10 opacity-30 mb-2" />
+          <span className="text-[9px] font-bold uppercase tracking-widest opacity-40">Image Not Available</span>
         </div>
       )}
     </div>
@@ -918,7 +941,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                   className="relative aspect-[4/3] overflow-hidden cursor-pointer" 
                   onClick={() => { setExploringEvent(event); onEventView?.(event.id); }}
                 >
-                  <ImageWithFallback src={event.posterUrl} alt={event.title} className="w-full h-full" />
+                  <ImageWithFallback 
+                    src={event.posterUrl} 
+                    alt={event.title} 
+                    className="w-full h-full"
+                    fallbackSrc={getCategoryDefaultImage(event.category)}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-8">
                      <span className="text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2">
                         View Details <ArrowRight className="w-4 h-4" />
