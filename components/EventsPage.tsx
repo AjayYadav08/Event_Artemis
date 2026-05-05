@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { 
   Zap, 
@@ -12,6 +12,7 @@ import {
   Ticket, 
   CalendarDays,
   AlertCircle,
+  ArrowUp,
   CalendarCheck,
   X,
   Rocket,
@@ -700,6 +701,21 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   const [activeNav, setActiveNav] = useState('tour-closing');
   const [exploringEvent, setExploringEvent] = useState<CampusEvent | null>(null);
   
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (e.currentTarget.scrollTop > 300) {
+      setShowBackToTop(true);
+    } else {
+      setShowBackToTop(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   const [now, setNow] = useState(new Date());
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -996,9 +1012,15 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                      <CalendarDays className="w-4 h-4 text-slate-400" />
                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{event.date}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-800 leading-tight mb-4 min-h-[3.5rem] line-clamp-2">
+                  <h3 className="text-lg font-bold text-slate-800 leading-tight mb-3 min-h-[3.5rem] line-clamp-2">
                     {event.title}
                   </h3>
+
+                  <div className="mb-4 flex items-center">
+                    <span className="inline-flex items-center px-3 py-1 rounded-lg text-[11px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 border border-blue-100 shadow-sm">
+                      {event.tracks?.[0] || event.category}
+                    </span>
+                  </div>
                   
                   <div className="flex items-center gap-3 mb-5 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                     <div className="flex -space-x-2 shrink-0">
@@ -1062,7 +1084,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   };
 
   return (
-    <div className={`h-full flex flex-col animate-in fade-in duration-1000 pb-32 overflow-y-auto no-scrollbar transition-all duration-500 ${isCalendarOpen ? 'pr-[320px]' : ''}`}>
+    <div 
+      ref={scrollContainerRef}
+      onScroll={handleScroll}
+      className={`h-full flex flex-col animate-in fade-in duration-1000 pb-32 overflow-y-auto no-scrollbar transition-all duration-500 ${isCalendarOpen ? 'pr-[320px]' : ''}`}
+    >
       
       {showTutorial && (
         <TutorialOverlay 
@@ -1665,6 +1691,21 @@ export const EventsPage: React.FC<EventsPageProps> = ({
           </div>,
           document.body
       )}
+
+      {/* Back to top button */}
+      <div 
+        className={`sticky bottom-8 z-[500] flex justify-center w-full pointer-events-none transition-all duration-500 ${
+          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
+        <button
+          onClick={scrollToTop}
+          className="pointer-events-auto bg-slate-900 text-white p-4 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:bg-black hover:shadow-[0_12px_40px_rgba(0,0,0,0.3)] hover:-translate-y-1 transition-all flex items-center justify-center group"
+          aria-label="Back to top"
+        >
+          <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+        </button>
+      </div>
     </div>
   );
 };
