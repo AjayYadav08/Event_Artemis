@@ -78,8 +78,8 @@ export const TutorialOverlay: React.FC<TutorialOverlayProps> = ({ steps, onClose
   // --- Fallback for missing elements: Centered Modal ---
   if (!rect) {
     return createPortal(
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-in fade-in">
-         <div className="bg-white p-8 rounded-[32px] shadow-2xl max-w-sm w-full m-4 border border-slate-100 flex flex-col gap-4 animate-in zoom-in-95 duration-200">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm  ">
+         <div className="bg-white p-8 rounded-[32px] shadow-2xl max-w-sm w-full m-4 border border-slate-100 flex flex-col gap-4  -95 duration-200">
              <div className="flex justify-between items-start">
                 <div className="flex items-center gap-2">
                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs shadow-sm">
@@ -211,7 +211,7 @@ export const TutorialOverlay: React.FC<TutorialOverlayProps> = ({ steps, onClose
       <div style={highlightStyle} className="ring-2 ring-blue-500/50 animate-pulse" />
       <div 
         style={tooltipStyle} 
-        className="pointer-events-auto bg-white p-6 rounded-[24px] shadow-2xl border border-slate-100 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-300"
+        className="pointer-events-auto bg-white p-6 rounded-[24px] shadow-2xl border border-slate-100 flex flex-col gap-4   -95 "
       >
         <div style={arrowStyle} className="shadow-sm" />
         <div className="flex justify-between items-start relative z-10">

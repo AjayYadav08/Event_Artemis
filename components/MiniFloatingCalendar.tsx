@@ -43,7 +43,7 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
       <div 
         className={`pointer-events-auto bg-white/95 backdrop-blur-2xl border border-blue-100/80 rounded-[32px] shadow-[0_30px_80px_-20px_rgba(37,99,235,0.35)] overflow-hidden mb-6 transition-all origin-bottom-right relative will-change-transform ring-4 ring-white/50 ${
           isOpen 
-            ? 'w-[340px] opacity-100 scale-100 translate-y-0 duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]'
+            ? 'w-[340px] opacity-100 scale-100 translate-y-0  ease-[cubic-bezier(0.34,1.56,0.64,1)]'
             : 'w-[340px] h-[100px] opacity-0 scale-50 translate-y-24 pointer-events-none duration-150 ease-in'
         }`}
       >
@@ -71,7 +71,7 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
                </div>
                
                {/* Tooltip speech bubble */}
-               <div className="absolute right-full mr-4 top-0 w-40 bg-slate-900 text-white text-[10px] p-4 rounded-2xl rounded-tr-none shadow-xl transform transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 pointer-events-none border border-slate-700 z-50">
+               <div className="absolute right-full mr-4 top-0 w-40 bg-slate-900 text-white text-[10px] p-4 rounded-2xl rounded-tr-none shadow-xl transform transition-all  opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 pointer-events-none border border-slate-700 z-50">
                   <p className="font-medium leading-relaxed">"{robotMessage}"</p>
                   <div className="absolute top-0 -right-2 w-0 h-0 border-t-[10px] border-t-slate-900 border-r-[10px] border-r-transparent" />
                </div>
@@ -136,14 +136,14 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
       <button 
         id="tour-calendar"
         onClick={() => setIsOpen(!isOpen)}
-        className={`pointer-events-auto w-16 h-16 rounded-[28px] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)] transition-all duration-500 group relative border-2 border-white/20 z-[101] backdrop-blur-sm ${
+        className={`pointer-events-auto w-16 h-16 rounded-[28px] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)] transition-all  group relative border-2 border-white/20 z-[101] backdrop-blur-sm ${
           isOpen ? 'bg-slate-900 rotate-90 scale-90' : 'bg-gradient-to-br from-blue-500 to-indigo-600 hover:scale-110 active:scale-95 hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.6)]'
         }`}
       >
         {isOpen ? (
-             <X className="w-7 h-7 text-white transition-transform duration-500" />
+             <X className="w-7 h-7 text-white transition-transform " />
         ) : (
-             <CalendarIcon className="w-7 h-7 text-white transition-transform duration-500" />
+             <CalendarIcon className="w-7 h-7 text-white transition-transform " />
         )}
         
         {!isOpen && (

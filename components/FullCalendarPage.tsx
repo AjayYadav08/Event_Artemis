@@ -103,7 +103,7 @@ export const FullCalendarPage: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4 animate-in fade-in duration-500 overflow-hidden bg-transparent">
+    <div className="h-full flex flex-col gap-4    overflow-hidden bg-transparent">
       {/* Event Artemis Branding Header */}
       <div className="px-4 pt-4 flex items-center gap-3 shrink-0">
         <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -157,10 +157,10 @@ export const FullCalendarPage: React.FC = () => {
       </div>
 
       {/* Adaptive Layout - Dark Theme */}
-      <div className={`flex-1 flex gap-4 min-h-0 transition-all duration-500 ${
+      <div className={`flex-1 flex gap-4 min-h-0 transition-all  ${
         isExpanded ? 'flex-col' : ''
       }`}>
-        <div className={`bg-[#09090b] border border-white/10 rounded-3xl shadow-2xl flex flex-col transition-all duration-500 ease-in-out overflow-hidden ${
+        <div className={`bg-[#09090b] border border-white/10 rounded-3xl shadow-2xl flex flex-col transition-all  ease-in-out overflow-hidden ${
           isExpanded 
             ? 'w-full h-[600px]' 
             : selectedDate 
@@ -220,7 +220,7 @@ export const FullCalendarPage: React.FC = () => {
         </div>
 
         {selectedDate && !isExpanded && (
-          <div className="flex-[0.3] bg-[#000000] border border-white/10 text-white rounded-3xl p-6 flex flex-col shadow-2xl animate-in slide-in-from-right-8 duration-500 relative overflow-hidden">
+          <div className="flex-[0.3] bg-[#000000] border border-white/10 text-white rounded-3xl p-6 flex flex-col shadow-2xl    relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
             
             <div className="flex justify-between items-start mb-8 shrink-0 relative z-10">
@@ -458,8 +458,8 @@ export const FullCalendarPage: React.FC = () => {
       )}
       {/* Event Detail Modal */}
       {selectedEventId && selectedEvent && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-[40px] max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 duration-300 relative">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm   ">
+          <div className="bg-white rounded-[40px] max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl  -95  relative">
             {/* Close Button */}
             <button
               onClick={() => setSelectedEventId(null)}

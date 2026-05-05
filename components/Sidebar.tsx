@@ -56,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, unope
       <div className="flex-1 overflow-y-auto px-4 pb-6 space-y-1">
         <button 
           onClick={() => setActiveTab('Home')}
-          className={`flex items-center w-full px-4 py-3 rounded-2xl transition-all duration-300 ${
+          className={`flex items-center w-full px-4 py-3 rounded-2xl transition-all  ${
             activeTab === 'Home' 
               ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 font-bold' 
               : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
@@ -80,13 +80,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, unope
           {/* Special Border Container for Events */}
           <div className="relative group">
             {/* Animated Gradient Border */}
-            <div className={`absolute -inset-[2px] bg-gradient-to-r from-rose-400 via-orange-400 to-rose-400 rounded-[18px] opacity-70 blur-[1px] transition duration-500 ${
+            <div className={`absolute -inset-[2px] bg-gradient-to-r from-rose-400 via-orange-400 to-rose-400 rounded-[18px] opacity-70 blur-[1px] transition  ${
               activeTab === 'Events' ? 'opacity-100' : 'opacity-0 group-hover:opacity-40'
             }`}></div>
             
             <button 
               onClick={() => setActiveTab('Events')}
-              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl transition-all duration-300 bg-white border ${
+              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl transition-all  bg-white border ${
                 activeTab === 'Events' 
                   ? 'border-transparent text-rose-600 font-bold' 
                   : 'border-slate-100 text-slate-500 hover:text-slate-900'

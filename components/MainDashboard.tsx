@@ -89,7 +89,7 @@ export const MainDashboard: React.FC = () => {
   }, [selectedDay]);
 
   const renderSection = (title: string, sub: string, tasks: Task[], Icon: any) => (
-    <section className="mb-12 transition-all duration-500">
+    <section className="mb-12 transition-all ">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <div className="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center mr-4 shadow-sm">
@@ -139,7 +139,7 @@ export const MainDashboard: React.FC = () => {
             <button
               key={idx}
               onClick={() => setSelectedDay(item.date)}
-              className={`flex flex-col items-center min-w-[56px] py-3 rounded-2xl transition-all duration-300 ${
+              className={`flex flex-col items-center min-w-[56px] py-3 rounded-2xl transition-all  ${
                 selectedDay === item.date 
                   ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] scale-105' 
                   : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200'
@@ -158,7 +158,7 @@ export const MainDashboard: React.FC = () => {
       </div>
 
       {/* Dynamic Data Sections */}
-      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="   ">
         {renderSection("Latest Released", `Tasks active for Jan ${selectedDay}`, filteredLatest, History)}
         {renderSection("Upcoming Deadlines", "Critical priority items", upcomingDeadlines, Clock)}
       </div>

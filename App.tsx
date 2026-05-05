@@ -378,7 +378,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen w-full bg-[#fcfdfe] overflow-hidden text-slate-700 relative selection:bg-blue-100 selection:text-blue-900 animate-in fade-in duration-1000">
+    <div className="flex h-screen w-full bg-[#fcfdfe] overflow-hidden text-slate-700 relative selection:bg-blue-100 selection:text-blue-900">
       
       {/* GLOBAL TOAST CONTAINER */}
       <div className="fixed top-20 right-6 z-[10001] flex flex-col gap-4 pointer-events-none w-96 perspective-[2000px]">
@@ -509,7 +509,7 @@ const App: React.FC = () => {
         />
       )}
       
-      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
+      <div className="flex-1 flex flex-col min-w-0 transition-all ">
         {!isDetailsOpen && (
           <TopBar 
             notifications={notifications}
@@ -527,7 +527,7 @@ const App: React.FC = () => {
         )}
         
         <div className="flex flex-1 overflow-hidden">
-          <main className="flex-1 overflow-y-auto p-8 min-w-0 bg-[#f8fafc]/50 relative">
+          <main className="flex-1 min-w-0 bg-[#f8fafc]/50 relative overflow-y-auto">
             {renderContent()}
           </main>
           

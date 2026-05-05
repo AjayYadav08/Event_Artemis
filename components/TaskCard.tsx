@@ -59,7 +59,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           </span>
           <div className="w-24 h-1.5 bg-slate-100 rounded-full mt-1.5 overflow-hidden">
             <div 
-              className={`h-full transition-all duration-700 ${isCompleted ? 'bg-emerald-400' : 'bg-slate-300'}`} 
+              className={`h-full transition-all  ${isCompleted ? 'bg-emerald-400' : 'bg-slate-300'}`} 
               style={{ width: `${(task.solved / task.total) * 100}%` }}
             />
           </div>

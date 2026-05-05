@@ -56,7 +56,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   };
 
   return (
-    <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 transition-all duration-300 relative">
+    <header className="h-16 border-b border-slate-200 bg-white/80 backdrop-blur-md px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 transition-all  relative">
       <div className="flex items-center gap-6">
         {/* Branch Selector */}
         <button className="group flex items-center gap-3 pl-1 pr-4 py-1.5 rounded-full hover:bg-slate-50 transition-all border border-transparent hover:border-slate-200">
@@ -124,7 +124,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
             {/* Dropdown Menu */}
             {isOpen && (
-              <div className="absolute top-full right-0 mt-4 w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right z-50">
+              <div className="absolute top-full right-0 mt-4 w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden   -95 duration-200 origin-top-right z-50">
                 <div className="p-4 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
                    <div className="flex items-center gap-2">
                      <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Notifications</h3>
@@ -188,7 +188,7 @@ export const TopBar: React.FC<TopBarProps> = ({
 
             {/* Profile Dropdown */}
             {isProfileOpen && (
-              <div className="absolute top-full right-0 mt-4 w-96 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right z-50">
+              <div className="absolute top-full right-0 mt-4 w-96 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden   -95 duration-200 origin-top-right z-50">
                 {/* Header */}
                 <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden">
                    <div className="absolute top-0 right-0 p-4 opacity-10">

@@ -1,0 +1,106 @@
+import { TutorialStep } from '../TutorialOverlay';
+
+export interface TimelineItem {
+  time: string;
+  title: string;
+  desc: string;
+}
+
+export interface Prize {
+  title: string;
+  desc: string;
+  amount: string;
+  color: string;
+}
+
+export interface Sponsor {
+  name: string;
+  tier: 'Platinum' | 'Gold' | 'Silver';
+  logoUrl?: string;
+}
+
+export interface Judge {
+  name: string;
+  role: string;
+  company: string;
+  avatarUrl: string;
+}
+
+export interface FAQ {
+  q: string;
+  a: string;
+}
+
+export interface CampusEvent {
+  id: string;
+  title: string;
+  category: 'Competition' | 'Fest' | 'Workshop' | 'Seminar';
+  type: 'Live' | 'Upcoming' | 'Closed';
+  date: string;
+  dayOfMonth: number;
+  time: string;
+  location: string;
+  xp: number;
+  attendees: number;
+  sectionParticipants: number; 
+  featured?: boolean;
+  description?: string;
+  jokes: string[];
+  timeline: TimelineItem[];
+  venueDetails: string;
+  prizePool?: string;
+  tracks?: string[];
+  posterUrl: string;
+  eligibility: string;
+  teamSize: string;
+  certification: boolean;
+  prizesList?: Prize[];
+  sponsors?: Sponsor[];
+  judges?: Judge[];
+  rules?: string[];
+  faqs?: FAQ[];
+  organizerContact?: {
+    phone: string;
+    email: string;
+  };
+  gallery?: string[];
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  skills: string[];
+  avatar: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  timestamp: string;
+  isMe: boolean;
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  hackathon: string;
+  description: string;
+  maxMembers: number;
+  status: 'Open' | 'Closed';
+  members: TeamMember[];
+  messages: ChatMessage[];
+}
+
+export interface JoinRequest {
+  id: string;
+  teamId: string;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  message: string;
+  timestamp: string;
+  status: 'Pending' | 'Accepted' | 'Rejected';
+}

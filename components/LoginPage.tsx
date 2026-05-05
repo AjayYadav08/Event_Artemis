@@ -48,27 +48,27 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
   }, [isExiting, onLogin]);
 
   return (
-    <div className={`h-screen w-full bg-[#fcfdfe] flex items-center justify-center relative overflow-hidden font-sans selection:bg-blue-100 transition-all duration-1000 ease-[cubic-bezier(0.645,0.045,0.355,1)] ${isExiting ? 'opacity-0 scale-105 filter blur-lg' : 'opacity-100 scale-100 blur-0'}`}>
+    <div className={`h-screen w-full bg-[#fcfdfe] flex items-center justify-center relative overflow-hidden font-sans selection:bg-blue-100 transition-all  ease-[cubic-bezier(0.645,0.045,0.355,1)] ${isExiting ? 'opacity-0 scale-105 filter blur-lg' : 'opacity-100 scale-100 blur-0'}`}>
        {/* Light Theme Background Elements - Matching Main App */}
        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-100/50 rounded-full blur-[120px] animate-pulse" />
        <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-[100px]" />
        
-       <div className="relative z-10 flex flex-col items-center animate-in fade-in zoom-in duration-700">
+       <div className="relative z-10 flex flex-col items-center    ">
           {/* Natively Recreated Logo Integration with Interactive Fill */}
-          <div className="relative overflow-hidden rounded-[3rem] px-16 py-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-white/60 bg-white/40 backdrop-blur-xl mb-4 animate-in fade-in zoom-in duration-1000">
+          <div className="relative overflow-hidden rounded-[3rem] px-16 py-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-white/60 bg-white/40 backdrop-blur-xl mb-4    ">
             {/* Rectangular Fill Overlay (Background) */}
             <div 
-              className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 transition-all duration-300 ease-out z-0"
+              className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 transition-all  ease-out z-0"
               style={{ width: `${progress}%` }}
             />
             {/* Glowing Edge Line */}
             <div 
-              className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-blue-500/40 to-transparent transition-all duration-300 ease-out z-0 shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+              className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-blue-500/40 to-transparent transition-all  ease-out z-0 shadow-[0_0_20px_rgba(59,130,246,0.6)]"
               style={{ left: `calc(${progress}% - 1px)` }}
             />
 
             <div 
-              className="relative z-10 flex flex-col items-center transition-transform duration-300 ease-out"
+              className="relative z-10 flex flex-col items-center transition-transform  ease-out"
               style={{ transform: `scale(${1 + (progress / 100) * 0.1})` }}
             >
               <div className="flex items-center relative">
