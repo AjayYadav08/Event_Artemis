@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, unope
             <Layout className="w-5 h-5 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-slate-900 tracking-tight text-sm leading-tight">Event Artemis</span>
+            <span className="font-black text-slate-900 tracking-tight text-sm leading-tight">Newton School of Technology</span>
             <span className="text-[9px] text-slate-400 font-bold tracking-[0.1em] mt-1">V3.0 PLATFORM</span>
           </div>
         </div>

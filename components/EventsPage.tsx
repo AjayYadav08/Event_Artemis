@@ -519,6 +519,128 @@ export const EVENTS_MOCK: CampusEvent[] = [
       "No flammable or explosive weapons allowed.",
       "Matches last 3 minutes or until knockout."
     ]
+  },
+  {
+    id: 'e_product_hunt',
+    title: 'Product Hunt Live 2026',
+    category: 'Seminar',
+    type: 'Upcoming',
+    date: '30 May 2026',
+    dayOfMonth: 30,
+    time: '04:00 PM',
+    location: 'Auditorium A',
+    xp: 1500,
+    attendees: 500,
+    sectionParticipants: 18,
+    tracks: ["Product Launch", "Growth Hacking"],
+    posterUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1000",
+    description: "Witness the launch of the next big things. Get insights from top product managers and founders.",
+    jokes: ["Ship it or rip it.", "Is this a feature or a bug? Yes."],
+    timeline: [{ time: "04:00 PM", title: "Keynote", desc: "Future of Product Management." }],
+    venueDetails: "Auditorium A, Ground Floor.",
+    eligibility: "All Students",
+    teamSize: "Individual",
+    certification: true,
+    organizerContact: { phone: "+1 (555) 777-8888", email: "ph@artemis.events" },
+    isPaid: false,
+    registrationFee: "Free",
+    duration: "4 Hours",
+    format: { rounds: ["Product Demos", "Q&A Session", "Networking"], type: 'Offline', mode: 'Solo' },
+    dos: ["Prepare questions", "Network with founders"],
+    donts: ["No self-promotion without approval"],
+    rules: ["Professional conduct required."]
+  },
+  {
+    id: 'e_quantum',
+    title: 'Quantum Computing Workshop',
+    category: 'Workshop',
+    type: 'Upcoming',
+    date: '5 Jun 2026',
+    dayOfMonth: 5,
+    time: '11:00 AM',
+    location: 'Physics Annex',
+    xp: 1000,
+    attendees: 45,
+    sectionParticipants: 3,
+    tracks: ["Qubits", "Quantum Algorithms"],
+    posterUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1000",
+    description: "Understand the basics of quantum computing and run your first circuit on a simulator.",
+    jokes: ["I'm in both states of understanding this.", "Entanglement is my relationship status."],
+    timeline: [{ time: "11:00 AM", title: "Theory", desc: "Introduction to Qubits." }],
+    venueDetails: "Physics Annex, Room 302.",
+    eligibility: "CS/Physics Students",
+    teamSize: "Individual",
+    certification: true,
+    organizerContact: { phone: "+1 (555) 000-1111", email: "quantum@artemis.events" },
+    isPaid: true,
+    registrationFee: "₹299",
+    duration: "5 Hours",
+    format: { rounds: ["Theoretical Foundation", "Hands-on Simulator", "Advanced Concepts"], type: 'Offline', mode: 'Solo' },
+    dos: ["Review linear algebra basics"],
+    donts: ["Don't be intimidated by the math"],
+    rules: ["Prerequisite: Basic programming knowledge."]
+  },
+  {
+    id: 'e_cloud_native',
+    title: 'Cloud Native Summit',
+    category: 'Competition',
+    type: 'Past',
+    date: '20 Apr 2026',
+    dayOfMonth: 20,
+    time: '09:00 AM',
+    location: 'Tech Plaza',
+    xp: 2200,
+    attendees: 600,
+    sectionParticipants: 30,
+    prizePool: "$20,000",
+    tracks: ["Kubernetes", "Serverless", "Microservices"],
+    posterUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000",
+    description: "Scale your applications to the moon. A competitive event focused on building resilient cloud infrastructures.",
+    jokes: ["Cloud? You mean someone else's computer?", "YAML is my love language."],
+    timeline: [{ time: "09:00 AM", title: "Deployment Phase", desc: "Spin up your clusters." }],
+    venueDetails: "Tech Plaza, Block D.",
+    eligibility: "Intermediate Developers",
+    teamSize: "2-4 Members",
+    certification: true,
+    organizerContact: { phone: "+1 (555) 222-3333", email: "cloud@artemis.events" },
+    isPaid: true,
+    registrationFee: "₹499",
+    duration: "12 Hours",
+    format: { rounds: ["Infrastructure Setup", "Scaling Challenge", "Resilience Testing"], type: 'Hybrid', mode: 'Team' },
+    dos: ["Automate everything"],
+    donts: ["Don't hardcode secrets"],
+    rules: ["Use CNCF-graduated projects."]
+  },
+  {
+    id: 'e_metaverse',
+    title: 'Metaverse Buildathon',
+    category: 'Competition',
+    type: 'Upcoming',
+    date: '20 Jun 2026',
+    dayOfMonth: 20,
+    time: '10:00 AM',
+    location: 'VR Studio',
+    xp: 2800,
+    attendees: 200,
+    sectionParticipants: 15,
+    prizePool: "Meta Quest 4 Pros",
+    tracks: ["VR Experience", "Social Spaces", "Avatars"],
+    posterUrl: "https://images.unsplash.com/photo-1626379953822-baec19c3bbcd?auto=format&fit=crop&q=80&w=1000",
+    description: "Create immersive worlds for the next generation of social interaction.",
+    jokes: ["In the metaverse, nobody knows you're a dog.", "Buffering in VR is a spiritual experience."],
+    timeline: [{ time: "10:00 AM", title: "World Building", desc: "Start of the buildathon." }],
+    venueDetails: "Block F, VR Lab.",
+    eligibility: "Unity/Unreal Developers",
+    teamSize: "1-4 Members",
+    certification: true,
+    organizerContact: { phone: "+1 (555) 666-7777", email: "metaverse@artemis.events" },
+    isPaid: false,
+    registrationFee: "Free",
+    duration: "3 Days",
+    format: { rounds: ["Environment Design", "Interaction Logic", "Final Walkthrough"], type: 'Hybrid', mode: 'Team' },
+    dos: ["Focus on optimization", "Test on multiple devices"],
+    donts: ["Don't ignore motion sickness guidelines"],
+    rules: ["Original assets preferred."]
   }
 ];
 
@@ -532,11 +654,76 @@ export const MOCK_TEAMS: Team[] = [
     status: 'Open',
     members: [
       { id: 'me', name: 'Ajay Yadav', role: 'Team Lead', skills: ['Full-Stack', 'Python'], avatar: 'https://i.pravatar.cc/150?img=12' },
-      { id: 'm2', name: 'Sarah Chen', role: 'AI Engineer', skills: ['PyTorch', 'NLP'], avatar: 'https://i.pravatar.cc/150?img=45' }
+      { id: 'm2', name: 'Sarah Chen', role: 'AI Engineer', skills: ['PyTorch', 'NLP'], avatar: 'https://i.pravatar.cc/150?img=45' },
+      { id: 'p4', name: 'Timothee Chalamet', role: 'Research', skills: ['Transformers'], avatar: 'https://i.pravatar.cc/150?img=18' },
+      { id: 'p1', name: 'Zoe Kravitz', role: 'Backend', skills: ['FastAPI'], avatar: 'https://i.pravatar.cc/150?img=32' }
     ],
     messages: [
       { id: '1', senderId: 'm2', senderName: 'Sarah', text: 'Hey team! Just finished the baseline model.', timestamp: '10:30 AM', isMe: false },
-      { id: '2', senderId: 'me', senderName: 'Ajay', text: 'Awesome! I am working on the frontend integration.', timestamp: '10:35 AM', isMe: true }
+      { id: '2', senderId: 'me', senderName: 'Ajay', text: 'Awesome! I am working on the frontend integration.', timestamp: '10:35 AM', isMe: true },
+      { id: '3', senderId: 'p4', senderName: 'Timothee', text: 'I found a better dataset for the fine-tuning.', timestamp: '10:40 AM', isMe: false },
+      { id: '4', senderId: 'p1', senderName: 'Zoe', text: 'Great! Should I start setting up the API endpoints?', timestamp: '10:42 AM', isMe: false },
+      { id: '5', senderId: 'me', senderName: 'Ajay', text: 'Yes, Zoe. Let\'s use FastAPI for that.', timestamp: '10:45 AM', isMe: true }
+    ]
+  },
+  {
+    id: 't2',
+    name: 'Bit Wizards',
+    hackathon: 'Algo-Trading Sprint',
+    description: 'Developing low-latency arbitrage strategies.',
+    maxMembers: 5,
+    status: 'Open',
+    members: [
+      { id: 'me', name: 'Ajay Yadav', role: 'Quant Lead', skills: ['C++', 'Python'], avatar: 'https://i.pravatar.cc/150?img=12' },
+      { id: 'm3', name: 'John Doe', role: 'Data Scientist', skills: ['NumPy', 'Pandas'], avatar: 'https://i.pravatar.cc/150?img=11' },
+      { id: 'u1', name: 'Mike Ross', role: 'HFT Dev', skills: ['Rust'], avatar: 'https://i.pravatar.cc/150?img=33' },
+      { id: 'u2', name: 'Elena Gilbert', role: 'Analyst', skills: ['Finance'], avatar: 'https://i.pravatar.cc/150?img=22' },
+      { id: 'p2', name: 'Robert Pattinson', role: 'DevOps', skills: ['Docker'], avatar: 'https://i.pravatar.cc/150?img=11' }
+    ],
+    messages: [
+      { id: '1', senderId: 'u1', senderName: 'Mike', text: 'The latency on the current bridge is too high.', timestamp: '11:00 AM', isMe: false },
+      { id: '2', senderId: 'm3', senderName: 'John', text: 'I am optimizing the data ingestion pipeline.', timestamp: '11:05 AM', isMe: false },
+      { id: '3', senderId: 'me', senderName: 'Ajay', text: 'Mike, check the Rust implementation. It should be sub-ms.', timestamp: '11:10 AM', isMe: true },
+      { id: '4', senderId: 'u2', senderName: 'Elena', text: 'Are we following the arbitrage limit rules?', timestamp: '11:15 AM', isMe: false },
+      { id: '5', senderId: 'p2', senderName: 'Robert', text: 'Infrastructure is ready for load testing.', timestamp: '11:20 AM', isMe: false }
+    ]
+  },
+  {
+    id: 't3',
+    name: 'Pixel Perfect',
+    hackathon: 'UI Mastery Workshop',
+    description: 'Polishing our design system for the final showcase.',
+    maxMembers: 3,
+    status: 'Open',
+    members: [
+      { id: 'me', name: 'Ajay Yadav', role: 'UI Lead', skills: ['Figma', 'React'], avatar: 'https://i.pravatar.cc/150?img=12' },
+      { id: 'p3', name: 'Lily Rose', role: 'Designer', skills: ['UI/UX'], avatar: 'https://i.pravatar.cc/150?img=25' },
+      { id: 'p4', name: 'Timothee Chalamet', role: 'Frontend', skills: ['Tailwind'], avatar: 'https://i.pravatar.cc/150?img=18' }
+    ],
+    messages: [
+      { id: '1', senderId: 'p3', senderName: 'Lily', text: 'Finished the design for the landing page!', timestamp: '09:00 AM', isMe: false },
+      { id: '2', senderId: 'me', senderName: 'Ajay', text: 'Looks clean! Can you export the assets?', timestamp: '09:10 AM', isMe: true },
+      { id: '3', senderId: 'p4', senderName: 'Timothee', text: 'I am starting on the hero section components.', timestamp: '09:15 AM', isMe: false }
+    ]
+  },
+  {
+    id: 't4',
+    name: 'Cyber Sentinels',
+    hackathon: 'Cyber Security Gauntlet',
+    description: 'Defending the core against penetration tests.',
+    maxMembers: 4,
+    status: 'Closed',
+    members: [
+      { id: 'me', name: 'Ajay Yadav', role: 'Security Analyst', skills: ['Burp Suite', 'Wireshark'], avatar: 'https://i.pravatar.cc/150?img=12' },
+      { id: 'm4', name: 'Alice Smith', role: 'Pen-tester', skills: ['Metasploit'], avatar: 'https://i.pravatar.cc/150?img=23' },
+      { id: 'm2', name: 'Sarah Chen', role: 'SecDev', skills: ['Go'], avatar: 'https://i.pravatar.cc/150?img=45' },
+      { id: 'u1', name: 'Mike Ross', role: 'Network Eng', skills: ['Cisco'], avatar: 'https://i.pravatar.cc/150?img=33' }
+    ],
+    messages: [
+      { id: '1', senderId: 'm4', senderName: 'Alice', text: 'Found a SQL injection vulnerability in the demo app.', timestamp: '02:00 PM', isMe: false },
+      { id: '2', senderId: 'me', senderName: 'Ajay', text: 'Patching it now. Sarah, check the middleware.', timestamp: '02:10 PM', isMe: true },
+      { id: '3', senderId: 'm2', senderName: 'Sarah', text: 'Middleware is secure. The input was not sanitized.', timestamp: '02:15 PM', isMe: false },
+      { id: '4', senderId: 'u1', senderName: 'Mike', text: 'Traffic spikes detected. Possible DDoS test?', timestamp: '02:20 PM', isMe: false }
     ]
   }
 ];
