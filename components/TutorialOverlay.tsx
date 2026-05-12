@@ -124,7 +124,11 @@ export const TutorialOverlay: React.FC = () => {
 
   // Smart repositioning logic: check if the preferred placement fits
   const canFit = (p: string) => {
-    if (p === 'top') return rect.top - TOOLTIP_MIN_HEIGHT - GAP - PADDING >= 0;
+    if (p === 'top') {
+      // Extra safety: if the element is already near the top, don't even try top placement
+      if (rect.top < 120) return false;
+      return rect.top - TOOLTIP_MIN_HEIGHT - GAP - PADDING >= 0;
+    }
     if (p === 'bottom') return rect.bottom + TOOLTIP_MIN_HEIGHT + GAP + PADDING <= vh;
     if (p === 'left') return rect.left - TOOLTIP_WIDTH - GAP - PADDING >= 0;
     if (p === 'right') return rect.right + TOOLTIP_WIDTH + GAP + PADDING <= vw;

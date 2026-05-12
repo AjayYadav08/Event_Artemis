@@ -56,10 +56,10 @@ export const TUTORIAL_FLOWS: Record<FlowId, TutorialStep[]> = {
       position: 'bottom'
     },
     {
-      targetId: 'tour-my-teams-list',
+      targetId: 'tour-sidebar-events',
       title: 'Operations Hub',
       content: 'Your central command for all active squads. Access chat, member management, and event details here.',
-      position: 'top'
+      position: 'right'
     }
   ],
   team_details: [

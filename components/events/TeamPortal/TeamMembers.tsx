@@ -82,8 +82,8 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
               </div>
               <p className="text-sm font-medium text-slate-400 mt-1">{member.role}</p>
               <div className="flex flex-wrap gap-1.5 mt-3">
-                {member.skills.map(skill => (
-                  <span key={skill} className="px-2.5 py-1 bg-white text-[10px] font-bold text-slate-500 rounded-lg border border-slate-100">{skill}</span>
+                {member.skills.map((skill, sIdx) => (
+                  <span key={`${skill}-${sIdx}`} className="px-2.5 py-1 bg-white text-[10px] font-bold text-slate-500 rounded-lg border border-slate-100">{skill}</span>
                 ))}
               </div>
             </div>
