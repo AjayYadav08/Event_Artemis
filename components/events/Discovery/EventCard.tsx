@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Users, Ticket, ArrowRight, Zap, GraduationCap, Trophy, Terminal, Palette, Mic2, Heart, ThumbsDown } from 'lucide-react';
+import { Clock, Users, Ticket, ArrowRight, Zap, GraduationCap, Trophy, Terminal, Palette, Mic2, Heart, ThumbsDown } from 'lucide-react';
 import { CampusEvent } from '../types';
 import ImageWithFallback from '../ImageWithFallback';
 
@@ -40,7 +40,7 @@ const EventCard: React.FC<EventCardProps> = ({
 
   return (
     <div 
-      className="group relative bg-white rounded-[32px] overflow-hidden transition-all border border-slate-100 hover:border-blue-400 hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-2 flex flex-col h-full opacity-100"
+      className="group relative bg-white rounded-[32px] overflow-hidden transition-all border border-slate-100 hover:border-blue-400 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] hover:-translate-y-2 flex flex-col h-full opacity-100 will-change-transform"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <ImageWithFallback 
@@ -57,7 +57,7 @@ const EventCard: React.FC<EventCardProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-80 group-hover:opacity-40 transition-opacity" />
         
         <div className="absolute top-5 left-5 flex flex-col gap-2">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-900/40 rounded-xl border border-white/10">
             <span className="text-white text-[10px] font-black uppercase tracking-widest">{event.category}</span>
           </div>
           {event.featured && (
@@ -78,7 +78,7 @@ const EventCard: React.FC<EventCardProps> = ({
            <button 
              onClick={(e) => { e.stopPropagation(); toggleInterested(event.id); }}
              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg border-2 ${
-               isInterested ? 'bg-rose-500 border-rose-400 text-white' : 'bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20'
+               isInterested ? 'bg-rose-500 border-rose-400 text-white' : 'bg-slate-900/40 border-white/10 text-white hover:bg-slate-900/60'
              }`}
            >
              <Heart className={`w-5 h-5 ${isInterested ? 'fill-current' : ''}`} />
@@ -88,7 +88,7 @@ const EventCard: React.FC<EventCardProps> = ({
              className={`w-10 h-10 rounded-full border transition-all shadow-lg flex items-center justify-center ${
                isNotInterested 
                  ? 'bg-slate-900 border-slate-800 text-white' 
-                 : 'bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20'
+                 : 'bg-slate-900/40 border-white/10 text-white hover:bg-slate-900/60'
              }`}
              title={isNotInterested ? "Click to remove dislike" : "Dislike this event"}
            >
@@ -98,7 +98,7 @@ const EventCard: React.FC<EventCardProps> = ({
 
         <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 text-white font-black text-sm">
+              <div className="w-10 h-10 bg-slate-900/40 rounded-xl flex items-center justify-center border border-white/10 text-white font-black text-sm">
                  {event.dayOfMonth}
               </div>
               <div className="flex flex-col">
@@ -109,14 +109,14 @@ const EventCard: React.FC<EventCardProps> = ({
         </div>
       </div>
 
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-start justify-between gap-4 mb-4">
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex items-start justify-between gap-4 mb-3">
           <div className="flex-1 min-w-0">
              <h3 className="text-lg font-black text-slate-900 group-hover:text-blue-600 transition-colors truncate mb-1">{event.title}</h3>
-             <div className="flex items-center gap-2 text-slate-400">
-                <MapPin className="w-3.5 h-3.5" />
-                <span className="text-xs font-bold truncate">{event.location}</span>
-             </div>
+              <div className="flex items-center gap-2 text-slate-400">
+                 <Terminal className="w-3.5 h-3.5" />
+                 <span className="text-xs font-bold truncate">{event.domain}</span>
+              </div>
           </div>
           {isUrgent && (
             <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-100">
@@ -126,15 +126,15 @@ const EventCard: React.FC<EventCardProps> = ({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
-           <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100">
+        <div className="grid grid-cols-2 gap-3 mb-4">
+           <div className="flex items-center gap-3 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               <Users className="w-4 h-4 text-slate-400" />
               <div className="flex flex-col">
                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-tight leading-none mb-1">Participants</span>
                  <span className="text-xs font-bold text-slate-700">{event.attendees}+</span>
               </div>
            </div>
-           <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100">
+           <div className="flex items-center gap-3 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               <Clock className="w-4 h-4 text-slate-400" />
               <div className="flex flex-col">
                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-tight leading-none mb-1">Status</span>
@@ -143,7 +143,7 @@ const EventCard: React.FC<EventCardProps> = ({
            </div>
         </div>
 
-        <div className="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+        <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
            <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
                  {getCategoryIcon(event.category)}

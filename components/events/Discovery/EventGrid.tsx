@@ -37,7 +37,7 @@ const EventGrid: React.FC<EventGridProps> = ({
   if (events.length === 0) return null;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div id={id} className="flex items-center justify-between border-b border-slate-100 pb-4 px-0">
         <div className="flex items-center gap-3">
           <Icon className={`w-5 h-5 ${colorClass.replace('bg-', 'text-')}`} />
@@ -46,7 +46,7 @@ const EventGrid: React.FC<EventGridProps> = ({
         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{events.length} results</span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {events.map(event => {
+        {React.useMemo(() => events.map(event => {
           const isInterested = interestedIds.has(event.id);
           const isNotInterested = notInterestedIds.has(event.id);
           const isRegistered = registeredIds.has(event.id);
@@ -62,12 +62,10 @@ const EventGrid: React.FC<EventGridProps> = ({
             const isToday = eventDate.toDateString() === now.toDateString();
 
             if (diff > 0) {
-              // Future Events
               if (isToday) {
                 timeString = title === "Closing Soon" ? "Ends today" : "Starting today";
                 isUrgent = true;
               } else if (diff < (24 * 60 * 60 * 1000)) {
-                // Less than 24 hours
                 const hours = Math.floor(diff / (1000 * 60 * 60));
                 const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 timeString = `${hours}h ${mins}m left`;
@@ -82,7 +80,6 @@ const EventGrid: React.FC<EventGridProps> = ({
                 isUrgent = false;
               }
             } else {
-              // Past Events
               isPast = true;
               if (isToday) {
                 timeString = "Ended today";
@@ -103,21 +100,28 @@ const EventGrid: React.FC<EventGridProps> = ({
           }
 
           return (
-            <EventCard 
-              key={event.id}
-              event={event}
-              isInterested={isInterested}
-              isRegistered={isRegistered}
-              isNotInterested={isNotInterested}
-              isPast={isPast}
-              isUrgent={isUrgent}
-              timeString={timeString}
-              onExplore={onExplore}
-              toggleInterested={toggleInterested}
-              markNotInterested={markNotInterested}
-            />
+            <div 
+              key={`${title}-${event.id}`} 
+              style={{ 
+                contentVisibility: 'auto', 
+                containIntrinsicSize: '1px 500px' // Provides a rough estimate of height to prevent scroll jump
+              } as React.CSSProperties}
+            >
+              <EventCard 
+                event={event}
+                isInterested={isInterested}
+                isRegistered={isRegistered}
+                isNotInterested={isNotInterested}
+                isPast={isPast}
+                isUrgent={isUrgent}
+                timeString={timeString}
+                onExplore={onExplore}
+                toggleInterested={toggleInterested}
+                markNotInterested={markNotInterested}
+              />
+            </div>
           );
-        })}
+        }), [events, interestedIds, notInterestedIds, registeredIds, now, todayDay, title, onExplore, toggleInterested, markNotInterested])}
       </div>
     </div>
   );

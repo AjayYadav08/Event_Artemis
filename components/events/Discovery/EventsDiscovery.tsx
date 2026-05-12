@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Clock, History } from 'lucide-react';
+import { Flame, Clock, History, SearchX, Sparkles } from 'lucide-react';
 import { CampusEvent } from '../types';
 import SearchFilters from './SearchFilters';
 import EventGrid from './EventGrid';
@@ -10,6 +10,7 @@ interface EventsDiscoveryProps {
   setSearchQuery: (val: string) => void;
   activeFilter: string;
   setActiveFilter: (val: string) => void;
+  activeNav: string;
   setActiveNav: (val: string) => void;
   closingSoonEvents: CampusEvent[];
   upcomingEvents: CampusEvent[];
@@ -29,13 +30,15 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
     showTeamsView,
     searchQuery, setSearchQuery,
     activeFilter, setActiveFilter,
-    setActiveNav,
+    activeNav, setActiveNav,
     closingSoonEvents, upcomingEvents, pastEvents,
     interestedIds, notInterestedIds, registeredIds,
     toggleInterested, markNotInterested,
     todayDay, now,
     onExplore
   } = props;
+
+  const totalResults = closingSoonEvents.length + upcomingEvents.length + pastEvents.length;
 
   if (showTeamsView) return null;
 
@@ -47,58 +50,86 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
         setSearchQuery={setSearchQuery}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
+        activeNav={activeNav}
         setActiveNav={setActiveNav}
       />
 
-      {/* SPOTLIGHT SECTION REMOVED */}
+      {totalResults === 0 ? (
+        <div className="flex flex-col items-center justify-center pt-16 pb-40 text-center animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out">
+          <div className="relative mb-8">
+            <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full" />
+            <div className="relative w-24 h-24 bg-white rounded-[32px] shadow-xl flex items-center justify-center border border-slate-100">
+               <SearchX className="w-10 h-10 text-slate-300" />
+            </div>
+            <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-amber-400 animate-pulse" />
+          </div>
+          
+          <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight">No Results Found</h3>
+          <p className="text-slate-500 max-w-xs mx-auto text-sm font-medium leading-relaxed">
+            We couldn't find any events matching your current search or filters. Try adjusting them to explore more!
+          </p>
+          
+          <button 
+            onClick={() => {
+              setSearchQuery('');
+              setActiveFilter('All');
+            }}
+            className="mt-10 px-8 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-black hover:shadow-xl transition-all active:scale-95"
+          >
+            Clear All Filters
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-16">
+          <EventGrid 
+            id="tour-closing"
+            title="Closing Soon"
+            Icon={Flame}
+            colorClass="bg-rose-500"
+            events={closingSoonEvents}
+            interestedIds={interestedIds}
+            notInterestedIds={notInterestedIds}
+            registeredIds={registeredIds}
+            toggleInterested={toggleInterested}
+            markNotInterested={markNotInterested}
+            todayDay={todayDay}
+            now={now}
+            onExplore={onExplore}
+          />
 
-      <EventGrid 
-        id="tour-closing"
-        title="Closing Soon"
-        Icon={Flame}
-        colorClass="bg-rose-500"
-        events={closingSoonEvents}
-        interestedIds={interestedIds}
-        notInterestedIds={notInterestedIds}
-        registeredIds={registeredIds}
-        toggleInterested={toggleInterested}
-        markNotInterested={markNotInterested}
-        todayDay={todayDay}
-        now={now}
-        onExplore={onExplore}
-      />
+          <EventGrid 
+            id="tour-upcoming"
+            title="Upcoming Feed"
+            Icon={Clock}
+            colorClass="bg-blue-600"
+            events={upcomingEvents}
+            interestedIds={interestedIds}
+            notInterestedIds={notInterestedIds}
+            registeredIds={registeredIds}
+            toggleInterested={toggleInterested}
+            markNotInterested={markNotInterested}
+            todayDay={todayDay}
+            now={now}
+            onExplore={onExplore}
+          />
 
-      <EventGrid 
-        id="tour-upcoming"
-        title="Upcoming Feed"
-        Icon={Clock}
-        colorClass="bg-blue-600"
-        events={upcomingEvents}
-        interestedIds={interestedIds}
-        notInterestedIds={notInterestedIds}
-        registeredIds={registeredIds}
-        toggleInterested={toggleInterested}
-        markNotInterested={markNotInterested}
-        todayDay={todayDay}
-        now={now}
-        onExplore={onExplore}
-      />
-
-      <EventGrid 
-        id="tour-past"
-        title="Past Feed"
-        Icon={History}
-        colorClass="bg-slate-400"
-        events={pastEvents}
-        interestedIds={interestedIds}
-        notInterestedIds={notInterestedIds}
-        registeredIds={registeredIds}
-        toggleInterested={toggleInterested}
-        markNotInterested={markNotInterested}
-        todayDay={todayDay}
-        now={now}
-        onExplore={onExplore}
-      />
+          <EventGrid 
+            id="tour-past"
+            title="Past Feed"
+            Icon={History}
+            colorClass="bg-slate-400"
+            events={pastEvents}
+            interestedIds={interestedIds}
+            notInterestedIds={notInterestedIds}
+            registeredIds={registeredIds}
+            toggleInterested={toggleInterested}
+            markNotInterested={markNotInterested}
+            todayDay={todayDay}
+            now={now}
+            onExplore={onExplore}
+          />
+        </div>
+      )}
     </div>
   );
 };

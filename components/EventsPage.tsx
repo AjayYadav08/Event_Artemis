@@ -104,6 +104,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: urgentInfo.day,
     time: urgentInfo.timeStr,
     location: 'Server Room 404',
+    domain: 'Competitive Programming',
     xp: 5000,
     attendees: 50,
     sectionParticipants: 5,
@@ -144,6 +145,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 12,
     time: '10:00 AM',
     location: 'Design Lab',
+    domain: 'UI/UX Design',
     xp: 1500,
     attendees: 45,
     sectionParticipants: 8,
@@ -175,6 +177,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 13,
     time: '02:00 PM',
     location: 'Cyber Hub',
+    domain: 'Cybersecurity',
     xp: 2500,
     attendees: 120,
     sectionParticipants: 15,
@@ -206,6 +209,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 8,
     time: '02:00 PM',
     location: 'Main Hall',
+    domain: 'AI & Ethics',
     xp: 1200,
     attendees: 150,
     sectionParticipants: 10,
@@ -237,6 +241,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 20,
     time: '10:00 AM',
     location: 'Crypto Lab',
+    domain: 'Blockchain/Web3',
     xp: 3000,
     attendees: 300,
     sectionParticipants: 25,
@@ -268,6 +273,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 2,
     time: '11:00 AM',
     location: 'Design Studio',
+    domain: 'Product Design',
     xp: 800,
     attendees: 80,
     sectionParticipants: 12,
@@ -299,6 +305,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 15,
     time: '09:00 AM',
     location: 'IIT Bombay Campus',
+    domain: 'HFT & Blockchain',
     xp: 2500,
     attendees: 1200,
     sectionParticipants: 42,
@@ -348,6 +355,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 24,
     time: '48H Non-stop',
     location: 'Innovation Wing',
+    domain: 'Artificial Intelligence',
     xp: 1200,
     attendees: 420,
     sectionParticipants: 15,
@@ -426,6 +434,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 30,
     time: '12:00 PM',
     location: 'Secure Lab 7',
+    domain: 'Cybersecurity',
     xp: 800,
     attendees: 85,
     sectionParticipants: 4,
@@ -465,6 +474,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 26,
     time: '10:00 AM',
     location: 'Design Lab B',
+    domain: 'UI Design',
     xp: 400,
     attendees: 120,
     sectionParticipants: 8,
@@ -503,6 +513,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 29,
     time: '08:00 AM',
     location: 'Finance Hub',
+    domain: 'FinTech',
     xp: 2000,
     attendees: 150,
     sectionParticipants: 12,
@@ -545,6 +556,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 12,
     time: '10:00 AM',
     location: 'The Arena',
+    domain: 'Robotics',
     xp: 3000,
     attendees: 800,
     sectionParticipants: 45,
@@ -591,6 +603,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 30,
     time: '04:00 PM',
     location: 'Auditorium A',
+    domain: 'Product Management',
     xp: 1500,
     attendees: 500,
     sectionParticipants: 18,
@@ -621,6 +634,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 5,
     time: '11:00 AM',
     location: 'Physics Annex',
+    domain: 'Quantum Computing',
     xp: 1000,
     attendees: 45,
     sectionParticipants: 3,
@@ -651,6 +665,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     dayOfMonth: 20,
     time: '10:00 AM',
     location: 'VR Studio',
+    domain: 'AR/VR & Metaverse',
     xp: 2800,
     attendees: 200,
     sectionParticipants: 15,
@@ -1027,7 +1042,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   const isExploringEventPast = exploringEvent ? exploringEvent.dayOfMonth < TODAY_DAY : false;
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 1000);
+    const interval = setInterval(() => setNow(new Date()), 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -1231,6 +1246,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
           setSearchQuery={setSearchQuery}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
+          activeNav={activeNav}
           setActiveNav={setActiveNav}
           closingSoonEvents={categories.nearDeadline}
           upcomingEvents={categories.upcoming}

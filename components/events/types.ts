@@ -40,6 +40,7 @@ export interface CampusEvent {
   dayOfMonth: number;
   time: string;
   location: string;
+  domain: string;
   xp: number;
   attendees: number;
   sectionParticipants: number; 
