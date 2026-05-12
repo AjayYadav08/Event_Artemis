@@ -135,17 +135,18 @@ export const TutorialOverlay: React.FC = () => {
     return true;
   };
 
+  type Placement = 'top' | 'bottom' | 'left' | 'right';
   if (!canFit(placement)) {
     // Try opposite first
-    const opposites: Record<string, string> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+    const opposites: Record<string, Placement> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
     if (canFit(opposites[placement])) {
       placement = opposites[placement];
     } else {
       // Find any that fits
-      const fallbacks = ['bottom', 'top', 'right', 'left'];
+      const fallbacks: Placement[] = ['bottom', 'top', 'right', 'left'];
       for (const f of fallbacks) {
         if (canFit(f)) {
-          placement = f as any;
+          placement = f;
           break;
         }
       }
