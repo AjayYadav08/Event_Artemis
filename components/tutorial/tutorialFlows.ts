@@ -32,7 +32,7 @@ export const TUTORIAL_FLOWS: Record<FlowId, TutorialStep[]> = {
       targetId: 'tour-calendar',
       title: 'AI Calendar Assistant',
       content: 'Our intelligent Calendar assistant helps you track deadlines. It marks dates for events you are interested in or registered for.',
-      position: 'left'
+      position: 'top'
     },
     {
       targetId: 'tour-teams-tab',

@@ -117,17 +117,39 @@ export const TutorialOverlay: React.FC = () => {
   const TOOLTIP_WIDTH = 320;
   const TOOLTIP_MIN_HEIGHT = 200; 
   const GAP = 16;
-  const PADDING = 16;
+  const PADDING = 20; // Increased padding for safer margins
   const { width: vw, height: vh } = windowSize;
 
   let placement = step.position || 'bottom';
 
-  if (placement === 'right' && (rect.right + TOOLTIP_WIDTH + GAP + PADDING > vw)) placement = 'bottom';
-  if (placement === 'left' && (rect.left - TOOLTIP_WIDTH - GAP - PADDING < 0)) placement = 'bottom';
-  if (placement === 'top' && (rect.top - TOOLTIP_MIN_HEIGHT - GAP - PADDING < 0)) placement = 'bottom';
-  if (placement === 'bottom' && (rect.bottom + TOOLTIP_MIN_HEIGHT + GAP + PADDING > vh)) placement = 'top';
+  // Smart repositioning logic: check if the preferred placement fits
+  const canFit = (p: string) => {
+    if (p === 'top') return rect.top - TOOLTIP_MIN_HEIGHT - GAP - PADDING >= 0;
+    if (p === 'bottom') return rect.bottom + TOOLTIP_MIN_HEIGHT + GAP + PADDING <= vh;
+    if (p === 'left') return rect.left - TOOLTIP_WIDTH - GAP - PADDING >= 0;
+    if (p === 'right') return rect.right + TOOLTIP_WIDTH + GAP + PADDING <= vw;
+    return true;
+  };
 
-  if ((placement === 'left' || placement === 'right') && vw < (TOOLTIP_WIDTH + PADDING * 2)) {
+  if (!canFit(placement)) {
+    // Try opposite first
+    const opposites: Record<string, string> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+    if (canFit(opposites[placement])) {
+      placement = opposites[placement];
+    } else {
+      // Find any that fits
+      const fallbacks = ['bottom', 'top', 'right', 'left'];
+      for (const f of fallbacks) {
+        if (canFit(f)) {
+          placement = f as any;
+          break;
+        }
+      }
+    }
+  }
+
+  // Final emergency check for narrow viewports
+  if (vw < (TOOLTIP_WIDTH + PADDING * 2)) {
     placement = rect.top > vh / 2 ? 'top' : 'bottom';
   }
 
