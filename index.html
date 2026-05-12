@@ -10,10 +10,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f8f9fa;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+      /* Prevent paint flashing on scroll */
+      overscroll-behavior: none;
     }
+
+    /* Promote interactive elements to their own compositor layer */
+    button, a, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Ensure smooth GPU-composited transforms on all transitioning elements */
+    .transition-all, .transition-transform, .transition-colors, .transition-opacity {
+      will-change: auto;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -27,6 +57,23 @@
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #cbd5e1;
+    }
+
+    /* Smooth scroll inside overflow containers */
+    [class*="overflow-y-auto"],
+    [class*="overflow-x-auto"] {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* No scrollbar utility */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Prevent layout shift on image load */
+    img {
+      display: block;
+      max-width: 100%;
     }
   </style>
 

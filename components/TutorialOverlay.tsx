@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ChevronRight, AlertCircle, MousePointer2 } from 'lucide-react';
 import { useTutorial } from './tutorial/TutorialContext';
@@ -16,12 +16,12 @@ export const TutorialOverlay: React.FC = () => {
   const { activeFlow, currentStepIndex, advanceStep, skipFlow } = useTutorial();
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-  const reqRef = useRef<number | null>(null);
+  const observerRef = useRef<ResizeObserver | null>(null);
 
   const steps = activeFlow ? TUTORIAL_FLOWS[activeFlow] : [];
   const step = activeFlow ? steps[currentStepIndex] : null;
 
-  const updateRect = () => {
+  const updateRect = useCallback(() => {
     if (!step) return;
     const element = document.getElementById(step.targetId);
     if (element) {
@@ -35,11 +35,11 @@ export const TutorialOverlay: React.FC = () => {
     } else {
       setRect(null);
     }
-  };
+  }, [step]);
 
   useLayoutEffect(() => {
     if (!activeFlow || !step) return;
-    
+
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
 
     const element = document.getElementById(step.targetId);
@@ -47,26 +47,31 @@ export const TutorialOverlay: React.FC = () => {
       element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     }
 
-    const loop = () => {
-      updateRect();
-      reqRef.current = requestAnimationFrame(loop);
-    };
-    loop();
+    // Initial measurement
+    updateRect();
+
+    // Watch for element resize (e.g., content reflow, layout changes)
+    observerRef.current?.disconnect();
+    if (element) {
+      observerRef.current = new ResizeObserver(() => updateRect());
+      observerRef.current.observe(element);
+    }
 
     const handleResize = () => {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
       updateRect();
     };
-    
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', updateRect, true);
+
+    // Passive scroll listener: fires only on actual scroll, not every frame
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('scroll', updateRect, { capture: true, passive: true });
 
     return () => {
-      if (reqRef.current) cancelAnimationFrame(reqRef.current);
+      observerRef.current?.disconnect();
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', updateRect, true);
     };
-  }, [activeFlow, currentStepIndex, step?.targetId]);
+  }, [activeFlow, currentStepIndex, step?.targetId, updateRect]);
 
   if (!activeFlow || !step) return null;
 

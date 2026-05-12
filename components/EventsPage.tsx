@@ -1014,11 +1014,15 @@ export const EventsPage: React.FC<EventsPageProps> = ({
     }));
   };
 
+  // Use a ref to throttle scroll state updates to prevent frame drops
+  const scrollTimeoutRef = useRef<number | null>(null);
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    if (e.currentTarget.scrollTop > 300) {
-      setShowBackToTop(true);
-    } else {
-      setShowBackToTop(false);
+    const scrollTop = e.currentTarget.scrollTop;
+    if (scrollTimeoutRef.current === null) {
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        setShowBackToTop(scrollTop > 300);
+        scrollTimeoutRef.current = null;
+      }, 100); // 100ms throttle for state update
     }
   }, []);
 
@@ -1026,25 +1030,21 @@ export const EventsPage: React.FC<EventsPageProps> = ({
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
   
-  const [now, setNow] = useState(new Date());
+  // Removed the 30-second top-level state interval. 
+  // Calling setNow(new Date()) every 30s was forcing the entire EventsPage 
+  // (and all hundreds of child components/cards) to re-render, causing massive lag spikes.
+  // Instead, we just capture 'now' once when the component mounts or when relevant.
+  const now = useMemo(() => new Date(), []);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showPeersModal, setShowPeersModal] = useState(false);
-  
-
-  
   const [invitedPeersMap, setInvitedPeersMap] = useState<Record<string, Set<string>>>({});
 
   const isRegistered = exploringEvent ? registeredIds.has(exploringEvent.id) : false;
   const isInterested = exploringEvent ? interestedIds.has(exploringEvent.id) : false;
   const isNotInterested = exploringEvent ? notInterestedIds.has(exploringEvent.id) : false;
   const isExploringEventPast = exploringEvent ? exploringEvent.dayOfMonth < TODAY_DAY : false;
-
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 30000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (externalExploringId) {
@@ -1137,7 +1137,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       return diff <= 0;
     });
     return { nearDeadline, upcoming, past };
-  }, [filteredData]);
+  }, [filteredData, now]);
 
   const onRegisterClick = () => {
     setShowConfirmModal(true);
@@ -1164,7 +1164,10 @@ export const EventsPage: React.FC<EventsPageProps> = ({
     setNewTeamData({ name: '', hackathon: '', description: '', maxMembers: 4 });
   };
 
-
+  const handleExploreEvent = useCallback((event: CampusEvent) => {
+    setExploringEvent(event);
+    onEventView?.(event.id);
+  }, [onEventView]);
 
   return (
     <div 
@@ -1258,7 +1261,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
           markNotInterested={markNotInterested}
           todayDay={TODAY_DAY}
           now={now}
-          onExplore={(e) => { setExploringEvent(e); onEventView?.(e.id); }}
+          onExplore={handleExploreEvent}
         />
       )}
 

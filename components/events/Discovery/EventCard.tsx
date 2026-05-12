@@ -39,8 +39,9 @@ const EventCard: React.FC<EventCardProps> = ({
   };
 
   return (
-    <div 
-      className="group relative bg-white rounded-[32px] overflow-hidden transition-all border border-slate-100 hover:border-blue-400 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] hover:-translate-y-2 flex flex-col h-full opacity-100 will-change-transform"
+    <div
+      className="group relative bg-white rounded-[32px] overflow-hidden border border-slate-100 hover:border-blue-400 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.1)] hover:-translate-y-2 flex flex-col h-full opacity-100 will-change-transform"
+      style={{ transition: 'transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms cubic-bezier(0.4,0,0.2,1), border-color 200ms ease' }}
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <ImageWithFallback 
