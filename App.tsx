@@ -43,6 +43,7 @@ interface ToastItem {
 const MainApp: React.FC = () => {
   const { activeFlow, startFlow, advanceStep, currentStepIndex } = useTutorial();
   const [activeTab, setActiveTab] = useState('Home');
+  const [eventsPageKey, setEventsPageKey] = useState(0);
   const [isMiniCalendarOpen, setIsMiniCalendarOpen] = useState(false);
   const [selectedGlobalDate, setSelectedGlobalDate] = useState<number | null>(null);
   const [exploringEventId, setExploringEventId] = useState<string | null>(null);
@@ -100,6 +101,9 @@ const MainApp: React.FC = () => {
     if (tab === 'Events' && activeTab !== 'Events') {
       // Trigger the Splash Screen Transition for Events
       setShowEventsSplash(true);
+    } else if (tab === 'Events' && activeTab === 'Events') {
+      // Already on Events — remount page to reset all state (soft refresh)
+      setEventsPageKey(k => k + 1);
     } else {
       setActiveTab(tab);
     }
@@ -374,6 +378,7 @@ const MainApp: React.FC = () => {
       case 'Events':
         return (
           <EventsPage 
+            key={eventsPageKey}
             selectedDate={selectedGlobalDate} 
             isCalendarOpen={isMiniCalendarOpen}
             interestedIds={interestedIds}

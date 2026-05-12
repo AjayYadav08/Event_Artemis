@@ -136,6 +136,68 @@ export const EVENTS_MOCK: CampusEvent[] = [
     ]
   },
   {
+    id: 'e_closing_soon_2',
+    title: 'UI Design Jam',
+    category: 'Workshop',
+    type: 'Upcoming',
+    date: '12 May 2026',
+    dayOfMonth: 12,
+    time: '10:00 AM',
+    location: 'Design Lab',
+    xp: 1500,
+    attendees: 45,
+    sectionParticipants: 8,
+    prizePool: "₹5,000",
+    tracks: ["Prototyping", "Design Ops"],
+    posterUrl: "https://images.unsplash.com/photo-1541462608141-ad60397d5873?auto=format&fit=crop&q=80&w=1000",
+    description: "A rapid prototyping challenge. Show us your best workflow.",
+    jokes: ["Iterate or die."],
+    timeline: [{ time: "10:00 AM", title: "Kickoff", desc: "Start jamming!" }],
+    venueDetails: "Room 101, Arts Block.",
+    eligibility: "Designers",
+    teamSize: "Individual",
+    certification: true,
+    organizerContact: { phone: "+91 12345 67890", email: "jam@artemis.events" },
+    isPaid: false,
+    registrationFee: "Free",
+    duration: "4 Hours",
+    format: { rounds: ["Kickoff", "Design Phase", "Review"], type: 'Offline', mode: 'Solo' },
+    dos: ["Bring your laptop"],
+    donts: ["Don't skip research"],
+    rules: ["Figma only."]
+  },
+  {
+    id: 'e_closing_soon_3',
+    title: 'Cloud Security Challenge',
+    category: 'Competition',
+    type: 'Upcoming',
+    date: '13 May 2026',
+    dayOfMonth: 13,
+    time: '02:00 PM',
+    location: 'Cyber Hub',
+    xp: 2500,
+    attendees: 120,
+    sectionParticipants: 15,
+    prizePool: "₹25,000",
+    tracks: ["AWS Security", "Pen-testing"],
+    posterUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=1000",
+    description: "Find the vulnerabilities in our cloud infrastructure before the time runs out.",
+    jokes: ["403 Forbidden is my favorite status code."],
+    timeline: [{ time: "02:00 PM", title: "Target Reveal", desc: "Go!" }],
+    venueDetails: "Block D, 2nd Floor.",
+    eligibility: "Security Enthusiasts",
+    teamSize: "Individual or Pairs",
+    certification: true,
+    organizerContact: { phone: "+91 09876 54321", email: "security@artemis.events" },
+    isPaid: false,
+    registrationFee: "Free",
+    duration: "6 Hours",
+    format: { rounds: ["Recon", "Exploit", "Report"], type: 'Online', mode: 'Both' },
+    dos: ["Be ethical"],
+    donts: ["No destructive attacks"],
+    rules: ["Standard CTF rules."]
+  },
+  {
     id: 'e_closing_soon_1',
     title: 'AI Ethics Debate',
     category: 'Seminar',
@@ -581,37 +643,6 @@ export const EVENTS_MOCK: CampusEvent[] = [
     rules: ["Prerequisite: Basic programming knowledge."]
   },
   {
-    id: 'e_cloud_native',
-    title: 'Cloud Native Summit',
-    category: 'Competition',
-    type: 'Past',
-    date: '20 Apr 2026',
-    dayOfMonth: 20,
-    time: '09:00 AM',
-    location: 'Tech Plaza',
-    xp: 2200,
-    attendees: 600,
-    sectionParticipants: 30,
-    prizePool: "$20,000",
-    tracks: ["Kubernetes", "Serverless", "Microservices"],
-    posterUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000",
-    description: "Scale your applications to the moon. A competitive event focused on building resilient cloud infrastructures.",
-    jokes: ["Cloud? You mean someone else's computer?", "YAML is my love language."],
-    timeline: [{ time: "09:00 AM", title: "Deployment Phase", desc: "Spin up your clusters." }],
-    venueDetails: "Tech Plaza, Block D.",
-    eligibility: "Intermediate Developers",
-    teamSize: "2-4 Members",
-    certification: true,
-    organizerContact: { phone: "+1 (555) 222-3333", email: "cloud@artemis.events" },
-    isPaid: true,
-    registrationFee: "₹499",
-    duration: "12 Hours",
-    format: { rounds: ["Infrastructure Setup", "Scaling Challenge", "Resilience Testing"], type: 'Hybrid', mode: 'Team' },
-    dos: ["Automate everything"],
-    donts: ["Don't hardcode secrets"],
-    rules: ["Use CNCF-graduated projects."]
-  },
-  {
     id: 'e_metaverse',
     title: 'Metaverse Buildathon',
     category: 'Competition',
@@ -650,6 +681,12 @@ export const MOCK_TEAMS: Team[] = [
     name: 'Neural Knights',
     hackathon: 'Global AI Hackathon',
     description: 'Building LLM-powered agents for automated code review.',
+    expectations: [
+      'Active contribution required',
+      'Must know React & Python',
+      'Daily communication expected',
+      'Passionate about AI Safety'
+    ],
     maxMembers: 4,
     status: 'Open',
     members: [
@@ -671,6 +708,12 @@ export const MOCK_TEAMS: Team[] = [
     name: 'Bit Wizards',
     hackathon: 'Algo-Trading Sprint',
     description: 'Developing low-latency arbitrage strategies.',
+    expectations: [
+      'Strong C++ or Rust skills',
+      'Background in Finance/Math',
+      'Available for 48H Sprint',
+      'High attention to detail'
+    ],
     maxMembers: 5,
     status: 'Open',
     members: [
@@ -734,6 +777,12 @@ export const MOCK_TEAMS_POOL: Team[] = [
     name: 'Byte Busters',
     hackathon: 'Flash Code Sprint',
     description: 'Fast and efficient bug hunters.',
+    expectations: [
+      'Quick problem solver',
+      'Familiar with C++ debuggers',
+      'Team player',
+      'Reliable communication'
+    ],
     maxMembers: 3,
     status: 'Open',
     members: [
@@ -746,6 +795,12 @@ export const MOCK_TEAMS_POOL: Team[] = [
     name: 'Design Dynamos',
     hackathon: 'Global AI Hackathon',
     description: 'Creating the most intuitive UI for AI.',
+    expectations: [
+      'Expert Figma skills',
+      'Experience with React/Tailwind',
+      'Eye for detail',
+      'Collaborative mindset'
+    ],
     maxMembers: 5,
     status: 'Open',
     members: [
@@ -1101,8 +1156,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       ref={scrollContainerRef}
       onScroll={handleScroll}
       style={{ willChange: 'transform' }}
-      className={`flex-1 flex flex-col transition-all pb-32 ${isCalendarOpen ? 'pr-[320px]' : ''} max-w-7xl mx-auto w-full h-full overflow-y-auto`}
+      className={`flex-1 flex flex-col transition-all pb-32 ${isCalendarOpen ? 'pr-[320px]' : ''} max-w-7xl mx-auto w-full h-full overflow-y-auto relative`}
     >
+      {/* Background Decorative Accents */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-50/30 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-50/20 rounded-full blur-[100px] pointer-events-none -z-10" />
       
 
 
@@ -1119,8 +1177,9 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       />
 
       {showTeamsView && (
-        <div className="px-4 mt-6    ">
+        <div className="px-4 mt-1    ">
           <TeamPortal 
+            availableEvents={EVENTS_MOCK}
             activeTeam={activeTeam}
             setActiveTeam={setActiveTeam}
             showCreateTeamForm={showCreateTeamForm}

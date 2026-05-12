@@ -29,79 +29,84 @@ const EventsHeader: React.FC<EventsHeaderProps> = ({
   const { activeFlow, currentStepIndex, advanceStep, resetAllFlows } = useTutorial();
 
   return (
-    <div className="px-8 pt-10 flex items-center justify-between mb-8">
-      <div className="flex items-center gap-3">
-        <button 
+    <div className="sticky top-0 z-[100] px-8 py-8 bg-white/80 backdrop-blur-xl border-b border-slate-100 flex items-center justify-between mb-4">
+      <div className="flex items-center gap-4">
+        <button
           onClick={resetAllFlows}
-          className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all group relative"
+          className="w-14 h-14 bg-gradient-to-br from-indigo-600 via-blue-600 to-indigo-700 rounded-[22px] flex items-center justify-center shadow-2xl shadow-indigo-200/50 hover:scale-105 active:scale-95 transition-all group relative overflow-hidden"
           title="Replay Onboarding Tutorial"
         >
-          <span className="text-[18px] font-black text-white group-hover:rotate-12 transition-transform">⚡</span>
-          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Rocket className="w-3 h-3 text-blue-600" />
-          </div>
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+          <span className="text-2xl font-black text-white relative z-10 group-hover:rotate-12 transition-transform">⚡</span>
+          <Rocket className="absolute -top-1 -right-1 w-4 h-4 text-white/40 rotate-45" />
         </button>
         <div>
-          <h1 className="text-4xl font-black text-slate-900">Event Artemis</h1>
-          <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">Discover & Participate</p>
+          <div className="flex items-center gap-3 mb-0.5">
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Event Artemis</h1>
+            <div className="px-2 py-0.5 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center gap-1">
+              <div className="w-1 h-1 rounded-full bg-indigo-500 animate-pulse" />
+              <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">Live Hub</span>
+            </div>
+          </div>
+          <p className="text-xs text-slate-400 font-bold uppercase tracking-[0.2em]">Discover & Participate</p>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* YOUR TEAMS BUTTON */}
-        <button
-          id="tour-teams-tab"
-          onClick={() => { 
-            setShowTeamsView(!showTeamsView); 
-            setActiveTeam(null); 
-            setShowTeamMembers(false); 
-            setShowCreateTeamForm(false); 
-            setShowJoinTeamView(false);
-            
-            if (activeFlow === 'homepage' && currentStepIndex === 3) {
-              advanceStep();
-            }
-          }}
-          className={`flex items-center gap-3 px-6 py-3.5 rounded-2xl text-sm font-black uppercase tracking-[0.2em] transition-all border-2 shadow-sm ${
-            showTeamsView
-              ? 'bg-indigo-600 text-white border-indigo-600 shadow-indigo-200'
-              : 'bg-white text-slate-600 border-slate-100 hover:border-indigo-200 hover:text-indigo-600 hover:shadow-md'
-          }`}
-        >
-          <MessageCircle className="w-5 h-5" />
-          Your Teams
-          <span className={`ml-1 px-2.5 py-0.5 rounded-full text-xs font-black ${showTeamsView ? 'bg-white/20 text-white' : 'bg-indigo-50 text-indigo-600'}`}>{teams.length}</span>
-        </button>
+      <div className="flex items-center gap-4">
+        {/* ACTION BUTTONS GROUP */}
+        <div className="flex items-center p-1.5 bg-slate-50 border border-slate-100 rounded-[24px] shadow-inner">
+          <button
+            id="tour-teams-tab"
+            onClick={() => {
+              setShowTeamsView(true); // Always open, never toggle back
+              setActiveTeam(null);
+              setShowTeamMembers(false);
+              setShowCreateTeamForm(false);
+              setShowJoinTeamView(false);
 
-        {/* New & Join Action Buttons (Only when Your Teams is active) */}
-        {showTeamsView && (
-          <div className="flex items-center gap-2  slide-in-from-right-4 ">
-            <button
-              id="tour-create-team-btn"
-              onClick={() => { setShowCreateTeamForm(true); setShowJoinTeamView(false); setActiveTeam(null); }}
-              className={`flex items-center gap-2 px-5 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
-                showCreateTeamForm 
-                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-200' 
-                  : 'bg-white text-emerald-600 border-emerald-100 hover:bg-emerald-50'
+              if (activeFlow === 'homepage' && currentStepIndex === 3) {
+                advanceStep();
+              }
+            }}
+            className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${showTeamsView
+              ? 'bg-white text-indigo-600 shadow-xl shadow-indigo-100 border border-indigo-50'
+              : 'text-slate-400 hover:text-indigo-600'
               }`}
-            >
-              <Rocket className="w-3.5 h-3.5" />
-              New Team
-            </button>
-            <button
-              id="tour-team-search"
-              onClick={() => { setShowJoinTeamView(true); setShowCreateTeamForm(false); setActiveTeam(null); }}
-              className={`flex items-center gap-2 px-5 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
-                showJoinTeamView 
-                  ? 'bg-amber-600 text-white border-amber-600 shadow-lg shadow-amber-200' 
-                  : 'bg-white text-amber-600 border-amber-100 hover:bg-amber-50'
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              Join Team
-            </button>
-          </div>
-        )}
+          >
+            <MessageCircle className="w-4 h-4" />
+            {showTeamsView ? 'Current Teams' : 'Your Teams'}
+            <span className={`ml-1 px-2 py-0.5 rounded-lg text-[10px] font-black ${showTeamsView ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
+              {teams.length}
+            </span>
+          </button>
+
+          {showTeamsView && (
+            <div className="flex items-center gap-1.5 ml-1.5 pr-1.5 border-l border-slate-200 pl-1.5 animate-in slide-in-from-left-4 fade-in duration-500">
+              <button
+                id="tour-create-team-btn"
+                onClick={() => { setShowCreateTeamForm(true); setShowJoinTeamView(false); setActiveTeam(null); }}
+                className={`flex items-center gap-2 px-5 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${showCreateTeamForm
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100'
+                  : 'text-emerald-600 hover:bg-emerald-50'
+                  }`}
+              >
+                <Rocket className="w-3.5 h-3.5" />
+                New Team
+              </button>
+              <button
+                id="tour-team-search"
+                onClick={() => { setShowJoinTeamView(true); setShowCreateTeamForm(false); setActiveTeam(null); }}
+                className={`flex items-center gap-2 px-5 py-3 rounded-[18px] text-[10px] font-black uppercase tracking-widest transition-all ${showJoinTeamView
+                  ? 'bg-amber-600 text-white shadow-lg shadow-amber-100'
+                  : 'text-amber-600 hover:bg-amber-50'
+                  }`}
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                Join Team
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

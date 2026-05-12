@@ -98,6 +98,7 @@ export interface Team {
   name: string;
   hackathon: string;
   description: string;
+  expectations?: string[];
   maxMembers: number;
   status: 'Open' | 'Closed';
   members: TeamMember[];

@@ -40,7 +40,7 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
   if (showTeamsView) return null;
 
   return (
-    <div className="space-y-24 px-8 pb-32">
+    <div className="space-y-12 px-8 pb-32">
       <SearchFilters 
         showTeamsView={showTeamsView}
         searchQuery={searchQuery}
