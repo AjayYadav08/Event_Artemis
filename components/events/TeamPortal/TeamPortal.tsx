@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ChevronLeft, Users2, ChevronRight } from 'lucide-react';
 import { Team, ChatMessage, JoinRequest } from '../types';
 import TeamChat from './TeamChat';
@@ -74,13 +74,28 @@ const TeamPortal: React.FC<TeamPortalProps> = (props) => {
 
   const { startFlow, advanceStep } = useTutorial();
 
+  // Ref flags — ensure each flow is started at most once per component mount lifecycle
+  const didStartTeamsFlow = useRef(false);
+  const didStartTeamDetailsFlow = useRef(false);
+
   useEffect(() => {
     if (!activeTeam && !showCreateTeamForm && !showJoinTeamView) {
-      startFlow('teams');
-    } else if (activeTeam) {
-      startFlow('team_details');
+      if (!didStartTeamsFlow.current) {
+        didStartTeamsFlow.current = true;
+        // Delay slightly so dynamic header buttons (New Team / Join Team) are in the DOM
+        const t = setTimeout(() => startFlow('teams'), 350);
+        return () => clearTimeout(t);
+      }
     }
-  }, [activeTeam, showCreateTeamForm, showJoinTeamView, startFlow]);
+  }, []); // Run once on mount of the main list view
+
+  useEffect(() => {
+    if (activeTeam && !didStartTeamDetailsFlow.current) {
+      didStartTeamDetailsFlow.current = true;
+      const t = setTimeout(() => startFlow('team_details'), 350);
+      return () => clearTimeout(t);
+    }
+  }, [activeTeam]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (activeTeam) {
     return (
