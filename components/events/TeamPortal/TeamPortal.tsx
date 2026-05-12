@@ -200,8 +200,9 @@ const TeamPortal: React.FC<TeamPortalProps> = (props) => {
   return (
     <div className="space-y-6" id="tour-my-teams-list">
       {/* Navigation & Title Section */}
-      <div className="flex flex-col gap-4 mb-2">
+      <div className="flex flex-col gap-4 mb-2" id="tour-teams-header-nav">
         <button
+          id="tour-back-to-events"
           onClick={() => setShowTeamsView(false)}
           className="flex items-center gap-2 self-start px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 bg-slate-50 border border-slate-100 hover:bg-white hover:border-indigo-200 hover:text-indigo-600 hover:shadow-lg transition-all group"
         >
@@ -209,7 +210,7 @@ const TeamPortal: React.FC<TeamPortalProps> = (props) => {
           Back to Events Feed
         </button>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between" id="tour-current-teams-title">
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-6 bg-indigo-500 rounded-full" />
             <h2 className="text-xl font-black text-slate-900 tracking-tight">Current Teams</h2>
@@ -221,9 +222,10 @@ const TeamPortal: React.FC<TeamPortalProps> = (props) => {
         </div>
       </div>
 
-      {teams.map(team => (
+      {teams.map((team, tIdx) => (
         <button
           key={team.id}
+          id={tIdx === 0 ? 'tour-first-team-card' : undefined}
           onClick={() => { setActiveTeam(team); setActiveTab('Chat'); }}
           className="w-full bg-white border border-slate-100 rounded-3xl p-5 flex items-center gap-5 hover:border-indigo-200 hover:shadow-lg transition-all group text-left"
         >
@@ -238,8 +240,8 @@ const TeamPortal: React.FC<TeamPortalProps> = (props) => {
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 truncate">{team.hackathon}</p>
             <div className="flex items-center gap-4">
               <div className="flex -space-x-2">
-                {team.members.slice(0, 3).map(m => (
-                  <img key={m.id} src={m.avatar} alt={m.name} className="w-7 h-7 rounded-full border-2 border-white shadow-sm" />
+                {team.members.slice(0, 3).map((m, mIdx) => (
+                  <img key={`${m.id}-${mIdx}`} src={m.avatar} alt={m.name} className="w-7 h-7 rounded-full border-2 border-white shadow-sm" />
                 ))}
                 {team.members.length > 3 && (
                   <div className="w-7 h-7 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[9px] font-black text-slate-500">+{team.members.length - 3}</div>

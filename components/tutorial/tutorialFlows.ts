@@ -43,36 +43,62 @@ export const TUTORIAL_FLOWS: Record<FlowId, TutorialStep[]> = {
     }
   ],
   teams: [
+    // Step 1 — Overview: introduce the Teams section from the header nav
     {
-      targetId: 'tour-team-search',
-      title: 'Join a Squad',
-      content: 'Explore the global teams pool, filter by event, and send join requests with personalized expectations to find your perfect match.',
+      targetId: 'tour-teams-tab',
+      title: 'Welcome to Your Teams',
+      content: 'This is your Teams Hub. From here you can manage your active squads, create a new team, or discover and join other teams across all events.',
       position: 'bottom'
     },
+    // Step 2 — Current Teams section title
+    {
+      targetId: 'tour-current-teams-title',
+      title: 'Current Teams',
+      content: 'All squads you are part of appear here. Each card shows the team name, event, status (Open / Closed), and current member count.',
+      position: 'bottom'
+    },
+    // Step 3 — First team card: how to open a team
+    {
+      targetId: 'tour-first-team-card',
+      title: 'Open Your Squad',
+      content: 'Click any team card to enter your squad workspace — access team chat, manage members, review join requests, and track your hackathon progress.',
+      position: 'bottom'
+    },
+    // Step 4 — New Team button
     {
       targetId: 'tour-create-team-btn',
-      title: 'Lead a Mission',
-      content: 'Have a vision? Create your own team, set your expectations, and recruit top talent from the community.',
+      title: 'Create a New Team',
+      content: 'Have a vision? Hit "New Team" to create your own squad. Set expectations, define your team size, and recruit the right talent for your hackathon.',
       position: 'bottom'
     },
+    // Step 5 — Join Team button
     {
-      targetId: 'tour-sidebar-events',
-      title: 'Operations Hub',
-      content: 'Your central command for all active squads. Access chat, member management, and event details here.',
+      targetId: 'tour-team-search',
+      title: 'Join an Existing Team',
+      content: 'Browse the global teams pool and filter by event or skill. Found a great match? Send a personalized join request and wait for host approval.',
+      position: 'bottom'
+    },
+    // Step 6 — Back to Events navigation
+    {
+      targetId: 'tour-back-to-events',
+      title: 'Back to Events',
+      content: 'Done exploring? Use this button to return to the main Events Feed at any time.',
       position: 'right'
     }
   ],
   team_details: [
+    // Step 1 — Team Chat
     {
       targetId: 'tour-team-chat',
-      title: 'Real-time Coordination',
-      content: 'Communicate with your squad instantly. Discuss strategy, share resources, and keep everyone in the loop.',
-      position: 'left'
+      title: 'Team Chat',
+      content: 'Stay in sync with your squad in real time. Discuss strategy, share updates, and coordinate your work — all in one place.',
+      position: 'top'
     },
+    // Step 2 — Members tab (requires clicking to advance)
     {
       targetId: 'tour-team-members-btn',
       title: 'Squad Management',
-      content: 'The ultimate control center. View member profiles, assign roles, and review incoming join requests to keep your team sharp.',
+      content: 'Switch to the Members tab to view your teammates, assign the Host role, rate collaborators, or review and manage incoming join requests.',
       position: 'bottom',
       requiresAction: true
     }

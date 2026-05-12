@@ -42,11 +42,11 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
       <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Team Members</h4>
       {activeTeam.members
         .filter(m => !(removedMembers[activeTeam.id]?.has(m.id)))
-        .map(member => {
+        .map((member, mIdx) => {
         const isMemberHost = teamHosts[activeTeam.id] === member.id;
         const existingRating = submittedRatings[member.id];
         return (
-        <div key={member.id} className="bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden">
+        <div key={`${member.id}-${mIdx}`} className="bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden">
           <div className="p-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="relative">
