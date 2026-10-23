@@ -46,7 +46,7 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
         {/* Header - More Compact */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-5">
-            <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 shadow-inner">
+            <div className="w-14 h-14 bg-[#EBF3FF] border border-[#BFDBFE] rounded-2xl flex items-center justify-center text-[#1D4ED8] shadow-inner">
               <Rocket className="w-7 h-7" />
             </div>
             <div>
@@ -56,9 +56,11 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
           </div>
           <button 
             onClick={() => setShowCreateTeamForm(false)} 
-            className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm"
+            className="h-10 px-3.5 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] transition-all shadow-sm group active:scale-[0.98]"
           >
-            <X className="w-6 h-6" />
+            <div className="w-6 h-6 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-500 group-hover:bg-white group-hover:border-slate-300 group-hover:text-slate-900 group-active:bg-white group-active:border-[#BFDBFE] group-active:text-[#1D4ED8] transition-all">
+              <X className="w-3.5 h-3.5" />
+            </div>
           </button>
         </div>
         
@@ -68,17 +70,17 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5 ml-1">Target Event</label>
             <button 
               onClick={() => setIsPickerOpen(true)}
-              className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-4 text-sm font-bold text-left hover:bg-white hover:border-emerald-300 focus:ring-8 focus:ring-emerald-500/5 transition-all flex items-center justify-between group shadow-sm hover:shadow-md"
+              className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-4 text-sm font-bold text-left hover:bg-slate-100 hover:border-slate-300 active:bg-[#EBF3FF] transition-all flex items-center justify-between group shadow-sm hover:shadow-md"
             >
               <div className="flex items-center gap-4">
-                <div className={`p-2 rounded-lg ${newTeamData.hackathon ? "bg-emerald-50 text-emerald-500" : "bg-slate-100 text-slate-300"}`}>
+                <div className={`p-2 rounded-lg ${newTeamData.hackathon ? "bg-[#EBF3FF] text-[#1D4ED8]" : "bg-slate-100 text-slate-300"}`}>
                   <Calendar className="w-4 h-4" />
                 </div>
                 <span className={newTeamData.hackathon ? "text-slate-900" : "text-slate-400"}>
                   {newTeamData.hackathon || "Select a Hackathon"}
                 </span>
               </div>
-              <ChevronDown className={`w-5 h-5 text-slate-400 group-hover:text-emerald-500 transition-all ${isPickerOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-5 h-5 text-slate-400 group-hover:text-[#1D4ED8] transition-all ${isPickerOpen ? 'rotate-180' : ''}`} />
             </button>
           </div>
 
@@ -86,13 +88,13 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
           <div className="space-y-2.5">
             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Team Name</label>
             <div className="relative group">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors flex items-center justify-center">
+              <div className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-[#0070F3] transition-colors flex items-center justify-center">
                 <Tag className="w-4 h-4" />
               </div>
               <input 
                 type="text" 
                 placeholder="e.g. Neural Knights"
-                className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] pl-14 pr-6 py-4 text-sm font-bold focus:bg-white focus:border-emerald-300 focus:ring-8 focus:ring-emerald-500/5 transition-all shadow-sm"
+                className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] pl-14 pr-6 py-4 text-sm font-bold focus:bg-white focus:border-[#0070F3] focus:ring-4 focus:ring-[#EBF3FF] transition-all shadow-sm"
                 value={newTeamData.name}
                 onChange={(e) => setNewTeamData({...newTeamData, name: e.target.value})}
               />
@@ -104,7 +106,7 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Capacity</label>
             <div className="relative">
               <select 
-                className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-4 text-sm font-bold appearance-none focus:bg-white focus:border-emerald-300 focus:ring-8 focus:ring-emerald-500/5 transition-all shadow-sm"
+                className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-4 text-sm font-bold appearance-none focus:bg-white focus:border-[#0070F3] focus:ring-4 focus:ring-[#EBF3FF] transition-all shadow-sm"
                 value={newTeamData.maxMembers}
                 onChange={(e) => setNewTeamData({...newTeamData, maxMembers: parseInt(e.target.value)})}
               >
@@ -121,7 +123,7 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Project Description</label>
             <textarea 
              placeholder="What is your team building? (goals, tech stack, vibes)"
-             className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-5 text-sm font-bold focus:bg-white focus:border-emerald-300 focus:ring-8 focus:ring-emerald-500/5 transition-all h-28 resize-none shadow-sm"
+             className="w-full bg-slate-50/50 border border-slate-100 rounded-[22px] px-6 py-5 text-sm font-bold focus:bg-white focus:border-[#0070F3] focus:ring-4 focus:ring-[#EBF3FF] transition-all h-28 resize-none shadow-sm"
              value={newTeamData.description}
              onChange={(e) => setNewTeamData({...newTeamData, description: e.target.value})}
             />
@@ -131,9 +133,12 @@ const CreateTeamForm: React.FC<CreateTeamFormProps> = ({
           <div className="md:col-span-2 pt-4">
             <button 
               onClick={handleCreateTeam}
-              className="w-full py-5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-[24px] font-black text-xs uppercase tracking-[0.2em] hover:from-emerald-700 hover:to-teal-700 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-emerald-200/50 flex items-center justify-center gap-4 group"
+              className="w-full h-12 bg-white border border-slate-200 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] text-slate-800 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-sm flex items-center justify-center gap-3 group active:scale-[0.98]"
             >
-              <Rocket className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> Launch Team
+              <div className="w-7 h-7 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-500 group-hover:bg-white group-hover:border-slate-300 group-hover:text-slate-900 group-active:bg-white group-active:border-[#BFDBFE] group-active:text-[#1D4ED8] transition-all">
+                <Rocket className="w-4 h-4" />
+              </div>
+              <span>Launch Team</span>
             </button>
           </div>
         </div>

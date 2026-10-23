@@ -44,7 +44,11 @@ export const TutorialOverlay: React.FC = () => {
 
     const element = document.getElementById(step.targetId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      const rect = element.getBoundingClientRect();
+      const isVisible = rect.top >= 60 && rect.bottom <= window.innerHeight - 20;
+      if (!isVisible) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
     }
 
     // Initial measurement

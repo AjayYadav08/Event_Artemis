@@ -167,18 +167,18 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                 </div>
              )}
 
-             <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12">
+             <div className="bg-[#EBF3FF]/60 border border-[#BFDBFE] rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12">
                 <div className="flex -space-x-3 shrink-0">
                    {Array.from({ length: 4 }).map((_, i) => (
                      <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 shadow-sm" style={{ backgroundImage: `url(https://i.pravatar.cc/100?img=${i + 15})`, backgroundSize: 'cover' }} />
                    ))}
-                   <div className="w-10 h-10 rounded-full border-2 border-white bg-indigo-100 flex items-center justify-center text-[10px] font-bold text-indigo-600 shadow-sm">
+                   <div className="w-10 h-10 rounded-full border-2 border-white bg-[#EBF3FF] flex items-center justify-center text-[10px] font-bold text-[#1D4ED8] shadow-sm">
                      +{exploringEvent.attendees > 4 ? exploringEvent.attendees - 4 : 0}
                    </div>
                 </div>
                 <div>
                    <p className="text-sm font-bold text-slate-800">
-                     <span className="text-indigo-600">{exploringEvent.attendees} people</span> from worldwide are participating
+                     <span className="text-[#1D4ED8]">{exploringEvent.attendees} people</span> from worldwide are participating
                    </p>
                    <p className="text-xs text-slate-500 mt-0.5">Don't miss out! Join the global community in this event.</p>
                 </div>
@@ -201,7 +201,7 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white rounded-[32px] p-8 border border-slate-100 shadow-sm">
                            <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                              <Building2 className="w-4 h-4 text-indigo-500" /> Event Format
+                              <Building2 className="w-4 h-4 text-[#1D4ED8]" /> Event Format
                            </h3>
                            <div className="space-y-4">
                               <div className="flex items-center justify-between">
@@ -343,12 +343,12 @@ const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                    {exploringEvent.judges && (
                      <div>
                        <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                          <Award className="w-4 h-4 text-purple-500" /> Jury & Speakers
+                          <Award className="w-4 h-4 text-[#1D4ED8]" /> Jury & Speakers
                        </h3>
                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                          {exploringEvent.judges.map((judge, idx) => (
                            <div key={idx} className="flex flex-col items-center text-center group">
-                             <div className="w-20 h-20 rounded-full mb-3 overflow-hidden border-2 border-slate-100 shadow-sm group-hover:border-purple-200 transition-all">
+                             <div className="w-20 h-20 rounded-full mb-3 overflow-hidden border-2 border-slate-100 shadow-sm group-hover:border-[#BFDBFE] transition-all">
                                <ImageWithFallback src={judge.avatarUrl} alt={judge.name} className="w-full h-full" />
                              </div>
                              <h4 className="font-bold text-slate-900 text-sm">{judge.name}</h4>

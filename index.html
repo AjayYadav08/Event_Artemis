@@ -75,6 +75,24 @@
       display: block;
       max-width: 100%;
     }
+
+    /* Your Teams Button Hover Style (Matches reference screenshot) */
+    #tour-teams-tab:hover {
+      background-color: #EEEFF3 !important;
+      border-color: #DDE0E5 !important;
+    }
+    #tour-teams-tab:hover .teams-tab-text {
+      color: #15191D !important;
+    }
+    #tour-teams-tab:hover .teams-tab-arrow {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+    #tour-teams-tab .teams-tab-arrow {
+      opacity: 0.25;
+      transform: scale(1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
   </style>
 
 </head>

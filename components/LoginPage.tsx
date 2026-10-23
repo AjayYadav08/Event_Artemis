@@ -51,14 +51,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
     <div className={`h-screen w-full bg-[#fcfdfe] flex items-center justify-center relative overflow-hidden font-sans selection:bg-blue-100 transition-all  ease-[cubic-bezier(0.645,0.045,0.355,1)] ${isExiting ? 'opacity-0 scale-105 filter blur-lg' : 'opacity-100 scale-100 blur-0'}`}>
        {/* Light Theme Background Elements - Matching Main App */}
        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-100/50 rounded-full blur-[120px] animate-pulse" />
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-[100px]" />
+       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[100px]" />
        
        <div className="relative z-10 flex flex-col items-center    ">
           {/* Natively Recreated Logo Integration with Interactive Fill */}
           <div className="relative overflow-hidden rounded-[3rem] px-16 py-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-white/60 bg-white/40 backdrop-blur-xl mb-4    ">
             {/* Rectangular Fill Overlay (Background) */}
             <div 
-              className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 transition-all  ease-out z-0"
+              className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-blue-500/10 via-[#0070F3]/10 to-sky-400/10 transition-all  ease-out z-0"
               style={{ width: `${progress}%` }}
             />
             {/* Glowing Edge Line */}
@@ -77,13 +77,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
                   <svg width="130" height="130" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <linearGradient id="logo-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#2563EB" />
-                        <stop offset="50%" stopColor="#4F46E5" />
-                        <stop offset="100%" stopColor="#9333EA" />
+                        <stop offset="0%" stopColor="#1D4ED8" />
+                        <stop offset="50%" stopColor="#0070F3" />
+                        <stop offset="100%" stopColor="#38BDF8" />
                       </linearGradient>
                       <linearGradient id="sparkle-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#6366f1" />
-                        <stop offset="100%" stopColor="#c084fc" />
+                        <stop offset="0%" stopColor="#2563EB" />
+                        <stop offset="100%" stopColor="#38BDF8" />
                       </linearGradient>
                       <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />
@@ -112,7 +112,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
                 {/* Branding Typography */}
                 <div className="flex flex-col justify-center text-left pt-2">
                   <span className="text-[52px] leading-[0.85] font-black text-[#0B132B] tracking-tight">event</span>
-                  <span className="text-[52px] leading-[1.1] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 tracking-tight">artemis</span>
+                  <span className="text-[52px] leading-[1.1] font-black text-transparent bg-clip-text bg-gradient-to-r from-[#1D4ED8] via-[#0070F3] to-[#38BDF8] tracking-tight">artemis</span>
                 </div>
               </div>
 
@@ -120,7 +120,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, loadingText = "In
               <div className="flex items-center gap-4 mt-6 opacity-90">
                  <div className="w-12 h-[2px] bg-gradient-to-r from-transparent to-blue-500 rounded-full"></div>
                  <span className="text-[11px] font-bold tracking-[0.3em] text-[#0B132B] uppercase">Discover Events. Create Memories.</span>
-                 <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-purple-500 rounded-full"></div>
+                 <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-sky-400 rounded-full"></div>
               </div>
             </div>
           </div>

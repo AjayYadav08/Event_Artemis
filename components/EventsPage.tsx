@@ -237,7 +237,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     title: 'Web3 Hackathon 2026',
     category: 'Competition',
     type: 'Upcoming',
-    date: '20 May 2026',
+    date: '20 Nov 2026',
     dayOfMonth: 20,
     time: '10:00 AM',
     location: 'Crypto Lab',
@@ -301,7 +301,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     title: 'Mumbai Developer Summit 2026',
     category: 'Competition',
     type: 'Upcoming',
-    date: '15 May 2026',
+    date: '15 Nov 2026',
     dayOfMonth: 15,
     time: '09:00 AM',
     location: 'IIT Bombay Campus',
@@ -351,7 +351,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     title: 'Global AI Hackathon 2026',
     category: 'Competition',
     type: 'Live',
-    date: '24 May 2026',
+    date: '24 Nov 2026',
     dayOfMonth: 24,
     time: '48H Non-stop',
     location: 'Innovation Wing',
@@ -379,7 +379,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     prizesList: [
       { title: "Grand Winner", desc: "Best Overall AI Solution", amount: "$25,000", color: "from-amber-400 to-orange-500" },
       { title: "Runner Up", desc: "Second Place Excellence", amount: "$15,000", color: "from-slate-300 to-slate-400" },
-      { title: "Innovation Award", desc: "Most creative use of LLMs", amount: "$5,000", color: "from-blue-400 to-indigo-500" },
+      { title: "Innovation Award", desc: "Most creative use of LLMs", amount: "$5,000", color: "from-blue-400 to-sky-500" },
       { title: "Student Track", desc: "Best project by undergraduates", amount: "MacBook Pros", color: "from-emerald-400 to-teal-500" }
     ],
     sponsors: [
@@ -470,7 +470,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     title: 'UI Mastery Workshop',
     category: 'Workshop',
     type: 'Upcoming',
-    date: '26 May 2026',
+    date: '26 Nov 2026',
     dayOfMonth: 26,
     time: '10:00 AM',
     location: 'Design Lab B',
@@ -509,7 +509,7 @@ export const EVENTS_MOCK: CampusEvent[] = [
     title: 'Algo-Trading Sprint',
     category: 'Competition',
     type: 'Upcoming',
-    date: '29 May 2026',
+    date: '29 Nov 2026',
     dayOfMonth: 29,
     time: '08:00 AM',
     location: 'Finance Hub',
@@ -863,6 +863,8 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   viewedEventIds
 }) => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeNav, setActiveNav] = useState('tour-closing');
   const [exploringEvent, setExploringEvent] = useState<CampusEvent | null>(null);
@@ -904,9 +906,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({
     setChatInput('');
   }, [chatInput, activeTeam]);
 
+  // Keep the page scroll container at top when a team is selected so the team header remains visible
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [teamMessages, activeTeam]);
+    if (activeTeam && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [activeTeam]);
 
   // Host & Rating state
   const [teamHosts, setTeamHosts] = useState<Record<string, string>>(
@@ -1096,7 +1101,9 @@ export const EventsPage: React.FC<EventsPageProps> = ({
 
   const filteredData = useMemo(() => {
     return EVENTS_MOCK.filter(e => {
-      const matchesCategory = activeFilter === 'All' || e.category === activeFilter;
+      const matchesCategory = selectedCategories.length === 0 
+        ? (activeFilter === 'All' || e.category === activeFilter)
+        : selectedCategories.includes(e.category);
       const matchesSearch = e.title.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesDate = selectedDate ? e.dayOfMonth === selectedDate : true;
       return matchesCategory && matchesSearch && matchesDate;
@@ -1115,7 +1122,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       if (!dateA || !dateB) return 0;
       return dateA.getTime() - dateB.getTime();
     });
-  }, [activeFilter, searchQuery, selectedDate, registeredIds, interestedIds, notInterestedIds]);
+  }, [selectedCategories, activeFilter, searchQuery, selectedDate, registeredIds, interestedIds, notInterestedIds]);
 
   const categories = useMemo(() => {
     const nearDeadline = filteredData.filter(e => {
@@ -1171,13 +1178,14 @@ export const EventsPage: React.FC<EventsPageProps> = ({
 
   return (
     <div 
+      id="events-page-scroll-container"
       ref={scrollContainerRef}
       onScroll={handleScroll}
       style={{ willChange: 'transform' }}
       className={`flex-1 flex flex-col transition-all pb-32 ${isCalendarOpen ? 'pr-[320px]' : ''} max-w-7xl mx-auto w-full h-full overflow-y-auto relative`}
     >
       {/* Background Decorative Accents */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-50/30 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-50/30 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-blue-50/20 rounded-full blur-[100px] pointer-events-none -z-10" />
       
 
@@ -1194,6 +1202,10 @@ export const EventsPage: React.FC<EventsPageProps> = ({
         showJoinTeamView={showJoinTeamView}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        selectedStatuses={selectedStatuses}
+        setSelectedStatuses={setSelectedStatuses}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
         activeNav={activeNav}
@@ -1257,6 +1269,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({
           setActiveFilter={setActiveFilter}
           activeNav={activeNav}
           setActiveNav={setActiveNav}
+          selectedStatuses={selectedStatuses}
+          onClearAllFilters={() => {
+            setSelectedCategories([]);
+            setSelectedStatuses([]);
+          }}
           closingSoonEvents={categories.nearDeadline}
           upcomingEvents={categories.upcoming}
           pastEvents={categories.past}

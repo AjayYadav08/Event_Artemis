@@ -11,6 +11,8 @@ interface EventsDiscoveryProps {
   setActiveFilter: (val: string) => void;
   activeNav: string;
   setActiveNav: (val: string) => void;
+  selectedStatuses?: string[];
+  onClearAllFilters?: () => void;
   closingSoonEvents: CampusEvent[];
   upcomingEvents: CampusEvent[];
   pastEvents: CampusEvent[];
@@ -30,6 +32,8 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
     searchQuery, setSearchQuery,
     activeFilter, setActiveFilter,
     activeNav, setActiveNav,
+    selectedStatuses = [],
+    onClearAllFilters,
     closingSoonEvents, upcomingEvents, pastEvents,
     interestedIds, notInterestedIds, registeredIds,
     toggleInterested, markNotInterested,
@@ -37,7 +41,14 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
     onExplore
   } = props;
 
-  const totalResults = closingSoonEvents.length + upcomingEvents.length + pastEvents.length;
+  const showClosing = selectedStatuses.length === 0 || selectedStatuses.includes('tour-closing');
+  const showUpcoming = selectedStatuses.length === 0 || selectedStatuses.includes('tour-upcoming');
+  const showPast = selectedStatuses.length === 0 || selectedStatuses.includes('tour-past');
+
+  const visibleClosingCount = showClosing ? closingSoonEvents.length : 0;
+  const visibleUpcomingCount = showUpcoming ? upcomingEvents.length : 0;
+  const visiblePastCount = showPast ? pastEvents.length : 0;
+  const totalResults = visibleClosingCount + visibleUpcomingCount + visiblePastCount;
 
   if (showTeamsView) return null;
 
@@ -63,6 +74,7 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
             onClick={() => {
               setSearchQuery('');
               setActiveFilter('All');
+              onClearAllFilters?.();
             }}
             className="mt-10 px-8 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-black hover:shadow-xl transition-all active:scale-95"
           >
@@ -71,53 +83,59 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
         </div>
       ) : (
         <div className="space-y-16">
-          <EventGrid 
-            id="tour-closing"
-            title="Closing Soon"
-            Icon={Flame}
-            colorClass="bg-rose-500"
-            events={closingSoonEvents}
-            interestedIds={interestedIds}
-            notInterestedIds={notInterestedIds}
-            registeredIds={registeredIds}
-            toggleInterested={toggleInterested}
-            markNotInterested={markNotInterested}
-            todayDay={todayDay}
-            now={now}
-            onExplore={onExplore}
-          />
+          {showClosing && (
+            <EventGrid 
+              id="section-closing"
+              title="Closing Soon"
+              Icon={Flame}
+              colorClass="bg-rose-500"
+              events={closingSoonEvents}
+              interestedIds={interestedIds}
+              notInterestedIds={notInterestedIds}
+              registeredIds={registeredIds}
+              toggleInterested={toggleInterested}
+              markNotInterested={markNotInterested}
+              todayDay={todayDay}
+              now={now}
+              onExplore={onExplore}
+            />
+          )}
 
-          <EventGrid 
-            id="tour-upcoming"
-            title="Upcoming Feed"
-            Icon={Clock}
-            colorClass="bg-blue-600"
-            events={upcomingEvents}
-            interestedIds={interestedIds}
-            notInterestedIds={notInterestedIds}
-            registeredIds={registeredIds}
-            toggleInterested={toggleInterested}
-            markNotInterested={markNotInterested}
-            todayDay={todayDay}
-            now={now}
-            onExplore={onExplore}
-          />
+          {showUpcoming && (
+            <EventGrid 
+              id="section-upcoming"
+              title="Upcoming"
+              Icon={Clock}
+              colorClass="bg-blue-600"
+              events={upcomingEvents}
+              interestedIds={interestedIds}
+              notInterestedIds={notInterestedIds}
+              registeredIds={registeredIds}
+              toggleInterested={toggleInterested}
+              markNotInterested={markNotInterested}
+              todayDay={todayDay}
+              now={now}
+              onExplore={onExplore}
+            />
+          )}
 
-          <EventGrid 
-            id="tour-past"
-            title="Past Feed"
-            Icon={History}
-            colorClass="bg-slate-400"
-            events={pastEvents}
-            interestedIds={interestedIds}
-            notInterestedIds={notInterestedIds}
-            registeredIds={registeredIds}
-            toggleInterested={toggleInterested}
-            markNotInterested={markNotInterested}
-            todayDay={todayDay}
-            now={now}
-            onExplore={onExplore}
-          />
+          {showPast && (
+            <EventGrid 
+              id="section-past"
+              title="Past Due"
+              Icon={History}
+              colorClass="bg-slate-400"
+              events={pastEvents}
+              interestedIds={interestedIds}
+              notInterestedIds={notInterestedIds}
+              registeredIds={registeredIds}
+              toggleInterested={toggleInterested}
+              markNotInterested={markNotInterested}
+              todayDay={todayDay}
+              now={now}
+              onExplore={onExplore}
+            />
+          )}
         </div>
       )}
     </div>

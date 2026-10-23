@@ -180,7 +180,7 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
              </button>
              <button 
                 onClick={() => setSelectedDate(null)}
-                className="flex-1 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-blue-200 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 py-3.5 bg-gradient-to-r from-blue-600 to-sky-500 text-white hover:shadow-blue-200 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
              >
                 Clear Selection
              </button>
@@ -193,7 +193,7 @@ export const MiniFloatingCalendar: React.FC<MiniFloatingCalendarProps> = ({
         id="tour-calendar"
         onClick={() => setIsOpen(!isOpen)}
         className={`pointer-events-auto w-16 h-16 rounded-[28px] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)] transition-all  group relative border-2 border-white/20 z-[101] backdrop-blur-sm ${
-          isOpen ? 'bg-slate-900 rotate-90 scale-90' : 'bg-gradient-to-br from-blue-500 to-indigo-600 hover:scale-110 active:scale-95 hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.6)]'
+          isOpen ? 'bg-slate-900 rotate-90 scale-90' : 'bg-gradient-to-br from-blue-600 to-sky-500 hover:scale-110 active:scale-95 hover:shadow-[0_25px_50px_-12px_rgba(37,99,235,0.6)]'
         }`}
       >
         {isOpen ? (

@@ -133,7 +133,7 @@ export const TUTORIAL_FLOWS: Record<FlowId, TutorialStep[]> = {
     {
       targetId: 'tour-cal-interested',
       title: 'Your Watchlist',
-      content: 'Events you are interested in are highlighted with an indigo border. Keep an eye on them!',
+      content: 'Events you are interested in are highlighted with a blue border. Keep an eye on them!',
       position: 'bottom'
     },
     {

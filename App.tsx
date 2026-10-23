@@ -418,7 +418,7 @@ const MainApp: React.FC = () => {
 
             {/* Header: Calling Card Style */}
             <div className="flex items-center gap-3 border-b border-slate-100/50 pb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0 relative overflow-hidden">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-white/20 animate-pulse" />
                 <BellRing className="w-5 h-5 text-white animate-wiggle relative z-10" />
               </div>

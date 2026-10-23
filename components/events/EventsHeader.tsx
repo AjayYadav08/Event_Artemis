@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Zap, SlidersHorizontal, ChevronDown, Check, MessageCircle, Rocket, UserPlus, ArrowLeft } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, ChevronLeft, Check, MessageCircle, Rocket, UserPlus, ArrowLeft, ArrowRight, X, SlidersHorizontal } from 'lucide-react';
 import { Team } from './types';
 import { useTutorial } from '../tutorial/TutorialContext';
 
@@ -13,14 +13,24 @@ interface EventsHeaderProps {
   teams: Team[];
   showCreateTeamForm: boolean;
   showJoinTeamView: boolean;
-  // Search & filter props (pulled up from SearchFilters)
   searchQuery: string;
   setSearchQuery: (val: string) => void;
-  activeFilter: string;
-  setActiveFilter: (val: string) => void;
-  activeNav: string;
-  setActiveNav: (val: string) => void;
+  selectedCategories?: string[];
+  setSelectedCategories?: (val: string[]) => void;
+  selectedStatuses?: string[];
+  setSelectedStatuses?: (val: string[]) => void;
+  activeFilter?: string;
+  setActiveFilter?: (val: string) => void;
+  activeNav?: string;
+  setActiveNav?: (val: string) => void;
 }
+
+const CATEGORY_OPTIONS = [
+  { id: 'Competition', label: 'Competition' },
+  { id: 'Workshop', label: 'Workshop' },
+  { id: 'Fest', label: 'Fest' },
+  { id: 'Seminar', label: 'Seminar' },
+];
 
 const EventsHeader: React.FC<EventsHeaderProps> = ({
   showTeamsView,
@@ -34,224 +44,345 @@ const EventsHeader: React.FC<EventsHeaderProps> = ({
   showJoinTeamView,
   searchQuery,
   setSearchQuery,
+  selectedCategories = [],
+  setSelectedCategories,
+  selectedStatuses = [],
+  setSelectedStatuses,
   activeFilter,
   setActiveFilter,
   activeNav,
   setActiveNav,
 }) => {
   const { activeFlow, currentStepIndex, advanceStep } = useTutorial();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Category Filter State
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [pendingCategories, setPendingCategories] = useState<string[]>(selectedCategories);
+  const [isYourTeamsHovered, setIsYourTeamsHovered] = useState(false);
+  const categoryRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsFilterOpen(false);
+      const target = event.target as Node;
+      if (categoryRef.current && !categoryRef.current.contains(target)) {
+        setIsCategoryOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const categories = ['All', 'Competition', 'Workshop', 'Fest', 'Seminar'];
-  const navItems = [
-    { id: 'tour-closing', label: 'Closing Soon', icon: '🔥' },
-    { id: 'tour-upcoming', label: 'Upcoming Feed', icon: '⏰' },
-    { id: 'tour-past', label: 'Past Feed', icon: '⌛' },
-  ];
+  const openCategoryDropdown = () => {
+    setPendingCategories(selectedCategories);
+    setIsCategoryOpen(prev => !prev);
+  };
+
+  // Category Filter Handlers
+  const togglePendingCategory = (id: string) => {
+    setPendingCategories(prev => 
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
+  };
+
+  const handleClearCategory = () => {
+    setPendingCategories([]);
+    setSelectedCategories?.([]);
+    setActiveFilter?.('All');
+    setIsCategoryOpen(false);
+  };
+
+  const handleApplyCategory = () => {
+    setSelectedCategories?.(pendingCategories);
+    if (pendingCategories.length === 1) {
+      setActiveFilter?.(pendingCategories[0]);
+    } else if (pendingCategories.length === 0) {
+      setActiveFilter?.('All');
+    } else {
+      setActiveFilter?.(pendingCategories.join(','));
+    }
+    setIsCategoryOpen(false);
+  };
+
+  const hasActiveCategoryFilter = Boolean(
+    (selectedCategories && selectedCategories.length > 0) ||
+    (activeFilter && activeFilter !== 'All')
+  );
+
+  // Navigation shortcuts
+  const scrollToSection = (sectionId: string) => {
+    const doScroll = () => {
+      const el = document.getElementById(sectionId) || document.getElementById(`section-${sectionId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    if (showTeamsView) {
+      setShowTeamsView(false);
+      setActiveTeam(null);
+      setShowTeamMembers(false);
+      setShowCreateTeamForm(false);
+      setShowJoinTeamView(false);
+      setTimeout(doScroll, 60);
+    } else {
+      doScroll();
+    }
+  };
+
+
 
   return (
-    <div className="sticky top-0 z-[100] px-8 pt-6 pb-4 bg-white/80 backdrop-blur-xl border-b border-slate-100 mb-4 space-y-4">
-      {/* ROW 1 */}
-      <div className="flex items-center gap-3">
+    <div className="sticky top-0 z-[100] px-8 pt-5 pb-4 bg-white/80 backdrop-blur-xl border-b border-slate-100 mb-4">
+      {/* SINGLE ROW */}
+      <div className="flex items-center justify-between gap-4 w-full">
         {showTeamsView ? (
           <>
-            {/* LEFT: Back to Events Feed button */}
-            <div className="flex items-center p-1.5 bg-slate-50 border border-slate-100 rounded-[24px] shadow-inner shrink-0">
+            {/* LEFT: Back to Events Feed button (Border matches Your Teams button) */}
+            <button
+              id="tour-back-to-events"
+              onClick={() => {
+                setShowTeamsView(false);
+                setActiveTeam(null);
+                setShowTeamMembers(false);
+                setShowCreateTeamForm(false);
+                setShowJoinTeamView(false);
+              }}
+              className="h-10 w-24 rounded-lg border border-slate-200 hover:border-[#DDE0E5] bg-white hover:bg-[#F6F7F9] shadow-sm flex items-center justify-center gap-1.5 transition-all duration-150 text-slate-900 font-bold select-none cursor-pointer shrink-0 active:scale-[0.98]"
+            >
+              <ChevronLeft className="w-4 h-4 stroke-[2.5] text-slate-900" />
+              <span className="text-sm font-bold text-slate-900">Back</span>
+            </button>
+
+            {/* RIGHT: Team navigation buttons aligned to the far right */}
+            <div className="flex items-center gap-2.5 shrink-0">
               <button
+                id="tour-teams-tab"
                 onClick={() => {
-                  setShowTeamsView(false);
                   setActiveTeam(null);
                   setShowTeamMembers(false);
                   setShowCreateTeamForm(false);
                   setShowJoinTeamView(false);
                 }}
-                className="flex items-center gap-3 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all bg-white text-slate-700 shadow-xl shadow-slate-100 border border-slate-50 hover:text-indigo-600"
+                className={`h-10 w-[150px] px-4 rounded-xl flex items-center justify-center gap-2 text-xs font-bold transition-all shadow-sm active:scale-[0.98] ${
+                  !showCreateTeamForm && !showJoinTeamView
+                    ? 'border border-[#BFDBFE] bg-[#EBF3FF] text-[#1D4ED8]'
+                    : 'border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8]'
+                }`}
               >
-                <ArrowLeft className="w-4 h-4" />
-                Back to Events Feed
-              </button>
-            </div>
-
-            {/* RIGHT: Team navigation buttons (Current Teams / New Team / Join Team) */}
-            <div className="flex-1 bg-white/40 backdrop-blur-xl border border-white/60 p-2 rounded-[32px] shadow-[0_8px_32px_rgba(0,0,0,0.04)] transition-all">
-              <div className="flex items-center gap-2">
-                <button
-                  id="tour-teams-tab"
-                  onClick={() => {
-                    setActiveTeam(null);
-                    setShowTeamMembers(false);
-                    setShowCreateTeamForm(false);
-                    setShowJoinTeamView(false);
-                  }}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-[20px] text-xs font-black uppercase tracking-widest transition-all ${
+                <span>Current Teams</span>
+                <span
+                  className={`text-[10px] font-black px-1.5 py-0.5 rounded-md transition-all ${
                     !showCreateTeamForm && !showJoinTeamView
-                      ? 'bg-white text-indigo-600 shadow-lg shadow-indigo-100 border border-indigo-50'
-                      : 'text-slate-400 hover:text-indigo-600 hover:bg-white/60'
+                      ? 'bg-[#DBEAFE] text-[#1D4ED8] border border-[#BFDBFE]'
+                      : 'bg-slate-100 text-slate-600 hover:bg-white hover:text-slate-900'
                   }`}
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  Current Teams
-                  <span className={`ml-1 px-2 py-0.5 rounded-lg text-[10px] font-black ${
-                    !showCreateTeamForm && !showJoinTeamView ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'
-                  }`}>
-                    {teams.length}
-                  </span>
-                </button>
+                  {teams.length}
+                </span>
+              </button>
 
-                <div className="w-px h-5 bg-slate-200/60 shrink-0" />
+              <button
+                id="tour-create-team-btn"
+                onClick={() => { setShowCreateTeamForm(true); setShowJoinTeamView(false); setActiveTeam(null); }}
+                className={`h-10 w-[104px] px-3 rounded-xl flex items-center justify-center text-xs font-bold transition-all shadow-sm active:scale-[0.98] ${
+                  showCreateTeamForm
+                    ? 'border border-[#BFDBFE] bg-[#EBF3FF] text-[#1D4ED8]'
+                    : 'border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8]'
+                }`}
+              >
+                <span>New Team</span>
+              </button>
 
-                <button
-                  id="tour-create-team-btn"
-                  onClick={() => { setShowCreateTeamForm(true); setShowJoinTeamView(false); setActiveTeam(null); }}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-[20px] text-xs font-black uppercase tracking-widest transition-all ${showCreateTeamForm
-                    ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100'
-                    : 'text-emerald-600 hover:bg-emerald-50'
-                  }`}
-                >
-                  <Rocket className="w-3.5 h-3.5" />
-                  New Team
-                </button>
-
-                <div className="w-px h-5 bg-slate-200/60 shrink-0" />
-
-                <button
-                  id="tour-team-search"
-                  onClick={() => { setShowJoinTeamView(true); setShowCreateTeamForm(false); setActiveTeam(null); }}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-[20px] text-xs font-black uppercase tracking-widest transition-all ${showJoinTeamView
-                    ? 'bg-amber-600 text-white shadow-lg shadow-amber-100'
-                    : 'text-amber-600 hover:bg-amber-50'
-                  }`}
-                >
-                  <UserPlus className="w-3.5 h-3.5" />
-                  Join Team
-                </button>
-              </div>
+              <button
+                id="tour-team-search"
+                onClick={() => { setShowJoinTeamView(true); setShowCreateTeamForm(false); setActiveTeam(null); }}
+                className={`h-10 w-[104px] px-3 rounded-xl flex items-center justify-center text-xs font-bold transition-all shadow-sm active:scale-[0.98] ${
+                  showJoinTeamView
+                    ? 'border border-[#BFDBFE] bg-[#EBF3FF] text-[#1D4ED8]'
+                    : 'border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8]'
+                }`}
+              >
+                <span>Join Team</span>
+              </button>
             </div>
           </>
         ) : (
           <>
-            {/* LEFT: Your Teams button */}
-            <div className="flex items-center p-1.5 bg-slate-50 border border-slate-100 rounded-[24px] shadow-inner shrink-0">
-              <button
-                id="tour-teams-tab"
-                onClick={() => {
-                  setShowTeamsView(true);
-                  setActiveTeam(null);
-                  setShowTeamMembers(false);
-                  setShowCreateTeamForm(false);
-                  setShowJoinTeamView(false);
-                  if (activeFlow === 'homepage' && currentStepIndex === 3) {
-                    advanceStep();
-                  }
-                }}
-                className="flex items-center gap-3 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all text-slate-400 hover:text-indigo-600"
-              >
-                <MessageCircle className="w-4 h-4" />
+            {/* 1. YOUR TEAMS BUTTON (Increased width, rectangular with subtle rounded corners, subtle default arrow & hover effect) */}
+            <button
+              id="tour-teams-tab"
+              onClick={() => {
+                setShowTeamsView(true);
+                setActiveTeam(null);
+                setShowTeamMembers(false);
+                setShowCreateTeamForm(false);
+                setShowJoinTeamView(false);
+                if (activeFlow === 'homepage' && currentStepIndex === 3) {
+                  advanceStep();
+                }
+              }}
+              onMouseEnter={() => setIsYourTeamsHovered(true)}
+              onMouseLeave={() => setIsYourTeamsHovered(false)}
+              onMouseOver={() => setIsYourTeamsHovered(true)}
+              onMouseOut={() => setIsYourTeamsHovered(false)}
+              className={`group h-10 w-40 px-3.5 rounded-lg border shadow-sm flex items-center justify-between text-left transition-all duration-200 shrink-0 select-none active:scale-[0.98] ${
+                isYourTeamsHovered
+                  ? 'bg-[#EEEFF3] border-[#DDE0E5] text-[#15191D]'
+                  : 'bg-white border-slate-200 hover:bg-[#EEEFF3] hover:border-[#DDE0E5] text-slate-700 hover:text-[#15191D]'
+              } active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8]`}
+            >
+              <span className={`teams-tab-text text-sm font-semibold transition-colors ${
+                isYourTeamsHovered ? 'text-[#15191D]' : 'text-slate-700 group-hover:text-[#15191D]'
+              }`}>
                 Your Teams
-                <span className="ml-1 px-2 py-0.5 rounded-lg text-[10px] font-black bg-slate-200 text-slate-500">
-                  {teams.length}
-                </span>
-              </button>
-            </div>
+              </span>
+              <div
+                className={`teams-tab-arrow w-5 h-5 rounded-full bg-[#15191D] flex items-center justify-center text-white transition-all duration-200 shrink-0 shadow-xs ${
+                  isYourTeamsHovered
+                    ? 'opacity-100 scale-100'
+                    : 'opacity-25 group-hover:opacity-100'
+                }`}
+              >
+                <ArrowRight className="w-2.5 h-2.5 text-white stroke-[2.5]" />
+              </div>
+            </button>
 
-            {/* RIGHT: Search Bar */}
+            {/* 2. SEARCH BAR WITH INTEGRATED CATEGORY FILTER */}
             <div
               id="tour-search-bar"
-              className="flex-1 bg-white/40 backdrop-blur-xl border border-white/60 p-2 rounded-[32px] shadow-[0_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.06)] transition-all"
+              className="relative w-72 md:w-80 lg:w-[380px] xl:w-[420px] h-10 group shrink-0 transition-all"
             >
-              <div className="flex items-center gap-3">
-                <div className="relative flex-1 group">
-                  <div className="absolute inset-0 bg-blue-500/5 rounded-[24px] opacity-0 group-focus-within:opacity-100 transition-all duration-500 blur-xl pointer-events-none" />
-                  <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 group-focus-within:scale-110 transition-all duration-300 pointer-events-none z-10" />
-                  <input
-                    type="text"
-                    placeholder="Search hackathons, workshops, or fests..."
-                    className="w-full bg-white/80 border border-slate-100/50 pl-12 pr-20 py-3.5 rounded-[24px] text-sm font-medium placeholder:text-slate-400 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500/50 focus:bg-white outline-none transition-all duration-300 shadow-sm"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-16 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors z-20"
-                    >
-                      <Zap className="w-3.5 h-3.5 fill-current" />
-                    </button>
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-blue-600 transition-colors pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search events, hackathons..."
+                className={`w-full h-full bg-white border-2 border-slate-200/90 hover:border-slate-300 focus:border-[#2563eb] rounded-xl pl-10 ${
+                  searchQuery ? 'pr-[72px]' : 'pr-10'
+                } text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-150`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-10 top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+
+              {/* Integrated Category Filter Trigger & Dropdown Menu */}
+              <div className="absolute right-2 top-1/2 -translate-y-1/2" ref={categoryRef}>
+                <button
+                  id="tour-category-filter-btn"
+                  type="button"
+                  onClick={openCategoryDropdown}
+                  aria-label="Filter events by category"
+                  className={`relative w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
+                    isCategoryOpen
+                      ? 'text-blue-600 bg-blue-50'
+                      : hasActiveCategoryFilter
+                        ? 'text-blue-600 hover:bg-blue-50/70'
+                        : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  <SlidersHorizontal className="w-4 h-4" />
+                  {hasActiveCategoryFilter && (
+                    <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-blue-600 ring-2 ring-white" />
                   )}
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2" ref={dropdownRef}>
-                    <button
-                      onClick={() => setIsFilterOpen(!isFilterOpen)}
-                      className={`p-2 rounded-xl transition-all flex items-center gap-2 z-20 ${
-                        isFilterOpen ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-slate-50/80 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
-                      }`}
-                    >
-                      <SlidersHorizontal className="w-4 h-4" />
-                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} />
-                      {activeFilter !== 'All' && (
-                        <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 rounded-full border-2 border-white shadow-sm animate-in fade-in zoom-in duration-300" />
-                      )}
-                    </button>
-                    {isFilterOpen && (
-                      <div className="absolute right-0 top-full mt-4 w-56 bg-white/90 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-2 animate-in zoom-in-95 fade-in duration-200 origin-top-right z-[100]">
-                        <div className="px-3 py-2 mb-1">
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Filter Category</span>
-                        </div>
-                        {categories.map((cat) => (
-                          <button
-                            key={cat}
-                            onClick={() => { setActiveFilter(cat); setIsFilterOpen(false); }}
-                            className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all ${
-                              activeFilter === cat ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'
-                            }`}
+                </button>
+
+                {/* Category Dropdown Menu Card (Preserved interface) */}
+                {isCategoryOpen && (
+                  <div className="absolute top-full mt-2.5 right-0 z-50 w-72 bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-5 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-1">
+                      CATEGORY
+                    </div>
+
+                    <div className="space-y-3.5">
+                      {CATEGORY_OPTIONS.map(opt => {
+                        const isChecked = pendingCategories.includes(opt.id);
+                        return (
+                          <div
+                            key={opt.id}
+                            onClick={() => togglePendingCategory(opt.id)}
+                            className="flex items-center justify-between py-1 px-1 cursor-pointer select-none group"
                           >
-                            {cat}
-                            {activeFilter === cat && <Check className="w-3.5 h-3.5" />}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                            <span className="text-sm font-medium text-slate-800 group-hover:text-blue-600 transition-colors">
+                              {opt.label}
+                            </span>
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 transition-all flex items-center justify-center ${
+                                isChecked
+                                  ? 'bg-blue-600 border-blue-600 text-white'
+                                  : 'border-slate-300 bg-white group-hover:border-slate-400'
+                              }`}
+                            >
+                              {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="border-t border-slate-100 my-4" />
+
+                    <div className="flex items-center justify-between pt-1">
+                      <button
+                        type="button"
+                        onClick={handleClearCategory}
+                        className="text-sm font-semibold text-slate-700 hover:bg-slate-100 px-3 py-1.5 rounded-xl transition-colors"
+                      >
+                        Clear All
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleApplyCategory}
+                        className="bg-[#0070f3] hover:bg-blue-600 active:scale-95 text-white font-medium text-sm px-4 py-2 rounded-xl transition-all shadow-sm"
+                      >
+                        Apply Filter
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
+            </div>
+
+            {/* 4. NAVIGATION SHORTCUT BUTTONS (Bookmark-style from reference image) */}
+            <div className="flex items-center gap-2.5 shrink-0">
+              <button
+                id="tour-closing"
+                type="button"
+                onClick={() => scrollToSection('section-closing')}
+                className="h-10 px-4 rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] text-sm font-semibold transition-all select-none active:scale-[0.98] shrink-0"
+              >
+                Closing Soon
+              </button>
+
+              <button
+                id="tour-upcoming"
+                type="button"
+                onClick={() => scrollToSection('section-upcoming')}
+                className="h-10 px-4 rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] text-sm font-semibold transition-all select-none active:scale-[0.98] shrink-0"
+              >
+                Upcoming
+              </button>
+
+              <button
+                id="tour-past"
+                type="button"
+                onClick={() => scrollToSection('section-past')}
+                className="h-10 px-4 rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-100 text-slate-700 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] text-sm font-semibold transition-all select-none active:scale-[0.98] shrink-0"
+              >
+                Past Due
+              </button>
             </div>
           </>
         )}
       </div>
-
-      {/* ROW 2: Feed navigation (Closing Soon / Upcoming Feed / Past Feed) — hidden in teams view */}
-      {!showTeamsView && (
-        <div className="flex items-center p-1.5 bg-slate-100/50 rounded-[22px] w-fit" id="tour-feed-nav">
-          {navItems.map((item, index) => (
-            <React.Fragment key={item.id}>
-              <button
-                onClick={() => {
-                  setActiveNav(item.id);
-                  const el = document.getElementById(item.id);
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-                }}
-                className="relative px-5 py-3 rounded-[18px] text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-2 text-slate-500 hover:text-slate-800 hover:bg-white/40"
-              >
-                <span>{item.icon}</span>
-                {item.label}
-              </button>
-              {index < navItems.length - 1 && (
-                <div className="w-px h-4 bg-slate-300/40 mx-1 shrink-0" />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

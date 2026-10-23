@@ -105,7 +105,7 @@ const SharedModals: React.FC<SharedModalsProps> = ({
                          className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${
                            isInvited 
                             ? 'bg-slate-200 text-slate-400 cursor-not-allowed' 
-                            : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-100'
+                            : 'bg-[#0070F3] text-white hover:bg-[#0051B3] active:bg-[#004099] shadow-md shadow-blue-100'
                          }`}
                        >
                          {isInvited ? 'Invited' : <><Send className="w-3 h-3" /> Invite</>}

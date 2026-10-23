@@ -94,19 +94,19 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
                 {existingRating ? (
                   <button
                     onClick={() => { setRatingTarget(member.id); setRatingStars(existingRating.stars); setRatingFeedback(existingRating.feedback); }}
-                    className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-2xl border border-emerald-100 hover:border-emerald-300 transition-all cursor-pointer shadow-sm"
+                    className="flex items-center gap-2 px-3.5 py-2 bg-[#EBF3FF] rounded-2xl border border-[#BFDBFE] hover:bg-[#dbeafe] transition-all cursor-pointer shadow-sm text-[#1D4ED8] active:scale-[0.98]"
                   >
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-black text-emerald-600">{existingRating.stars}/5</span>
-                    <Star className="w-4 h-4" /> Rate
+                    <span className="text-xs font-bold text-[#1D4ED8]">{existingRating.stars}/5</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8]">Rated</span>
                   </button>
                 ) : (
                   <button
                     onClick={() => setRatingTarget(member.id)}
-                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-2xl border border-slate-100 text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all shadow-sm group"
+                    className="flex items-center gap-2 px-3.5 py-2 bg-white rounded-2xl border border-slate-200 hover:bg-slate-100 hover:border-slate-300 hover:text-slate-900 active:bg-[#EBF3FF] active:border-[#BFDBFE] active:text-[#1D4ED8] text-slate-700 transition-all shadow-sm group active:scale-[0.98]"
                   >
-                    <Star className="w-4 h-4 group-hover:fill-indigo-500 transition-all" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Rate</span>
+                    <Star className="w-4 h-4 text-slate-400 group-hover:text-slate-700 group-active:text-[#1D4ED8] transition-all" />
+                    <span className="text-[10px] font-bold uppercase tracking-wider group-hover:text-slate-900 group-active:text-[#1D4ED8]">Rate</span>
                   </button>
                 )}
               </div>
@@ -115,11 +115,11 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
 
           {/* Remove Confirmation */}
           {confirmRemoveTarget === member.id && (
-            <div className="px-4 pb-4 pt-2 border-t border-slate-100   duration-200">
+            <div className="px-4 pb-4 pt-2 border-t border-slate-100 duration-200">
               <div className="bg-rose-50 rounded-xl p-4 border border-rose-100 flex items-center justify-between">
                 <p className="text-xs font-bold text-rose-700">Remove {member.name.split(' ')[0]} from this team?</p>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setConfirmRemoveTarget(null)} className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition-all">Cancel</button>
+                  <button onClick={() => setConfirmRemoveTarget(null)} className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-100 transition-all">Cancel</button>
                   <button onClick={() => { handleRemoveMember(activeTeam.id, member.id); setConfirmRemoveTarget(null); }} className="px-3 py-1.5 bg-rose-500 text-white rounded-lg text-[10px] font-bold hover:bg-rose-600 transition-all shadow-sm">Remove</button>
                 </div>
               </div>
@@ -128,7 +128,7 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
 
           {/* Inline Rating UI */}
           {ratingTarget === member.id && (
-            <div className="px-4 pb-4 pt-2 border-t border-slate-100   slide-in-from-top-2 ">
+            <div className="px-4 pb-4 pt-2 border-t border-slate-100 slide-in-from-top-2">
               <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{existingRating ? 'Update' : 'Rate'} {member.name.split(' ')[0]}</span>
@@ -144,7 +144,7 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
                 <input
                   type="text"
                   placeholder="Quick feedback (optional)..."
-                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-3 text-sm font-medium outline-none focus:border-indigo-300 focus:ring-4 focus:ring-indigo-50 transition-all"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-3 text-sm font-medium outline-none focus:border-[#0070F3] focus:ring-4 focus:ring-[#EBF3FF] transition-all"
                   value={ratingFeedback}
                   onChange={(e) => setRatingFeedback(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSubmitRating()}
@@ -152,7 +152,7 @@ const TeamMembers: React.FC<TeamMembersProps> = ({
                 <button
                   onClick={handleSubmitRating}
                   disabled={ratingStars === 0}
-                  className="w-full py-3.5 bg-indigo-600 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-700 transition-all disabled:opacity-40 shadow-xl shadow-indigo-200"
+                  className="w-full py-3.5 bg-[#0070F3] hover:bg-[#1D4ED8] active:bg-[#1E40AF] text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-40 shadow-xl shadow-blue-200/50"
                 >
                   {existingRating ? 'Update Rating' : 'Submit Rating'}
                 </button>

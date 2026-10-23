@@ -19,7 +19,7 @@ const LEGENDS = [
   { label: 'Competition / Hackathon', color: 'bg-blue-500', category: 'Competition' },
   { label: 'Workshop / Seminar', color: 'bg-emerald-500', category: 'Workshop' }, // Grouped Workshop & Seminar
   { label: 'Fest / Culture', color: 'bg-orange-500', category: 'Fest' },
-  { label: 'Seminar', color: 'bg-purple-500', category: 'Seminar' }
+  { label: 'Seminar', color: 'bg-sky-400', category: 'Seminar' }
 ];
 
 const TODAY_DAY = new Date().getDate();
@@ -86,7 +86,7 @@ export const FullCalendarPage: React.FC = () => {
     switch (category) {
       case 'Competition': return 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]';
       case 'Workshop': return 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]';
-      case 'Seminar': return 'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.6)]';
+      case 'Seminar': return 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]';
       case 'Fest': return 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]';
       default: return 'bg-slate-500';
     }
@@ -96,7 +96,7 @@ export const FullCalendarPage: React.FC = () => {
     switch (category) {
       case 'Competition': return 'text-blue-400 border-blue-500/20 bg-blue-500/5';
       case 'Workshop': return 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5';
-      case 'Seminar': return 'text-purple-400 border-purple-500/20 bg-purple-500/5';
+      case 'Seminar': return 'text-sky-500 border-sky-400/20 bg-sky-400/10';
       case 'Fest': return 'text-orange-400 border-orange-500/20 bg-orange-500/5';
       default: return 'text-slate-400 border-slate-500/20 bg-slate-500/5';
     }
@@ -106,7 +106,7 @@ export const FullCalendarPage: React.FC = () => {
     <div className="h-full flex flex-col gap-4    overflow-hidden bg-transparent">
       {/* Event Artemis Branding Header */}
       <div className="px-4 pt-4 flex items-center gap-3 shrink-0">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg">
           <span className="text-[18px] font-black text-white">⚡</span>
         </div>
         <h1 className="text-4xl font-black text-slate-900 dark:text-white">Event Artemis</h1>
@@ -272,9 +272,9 @@ export const FullCalendarPage: React.FC = () => {
       {isExpanded && (
         <div className="fixed inset-0 top-0 left-0 right-0 bottom-0 z-[900] bg-[#09090b] flex flex-col overflow-hidden">
           {/* Expanded Header */}
-          <div className="flex items-center justify-between bg-gradient-to-r from-blue-600/10 to-indigo-600/10 px-6 py-4 border-b border-white/10 shrink-0">
+          <div className="flex items-center justify-between bg-gradient-to-r from-blue-600/10 to-sky-500/10 px-6 py-4 border-b border-white/10 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg">
                 <span className="text-xl font-black text-white">⚡</span>
               </div>
               <div>
@@ -550,7 +550,7 @@ export const FullCalendarPage: React.FC = () => {
 
               {/* CTA */}
               <div className="flex gap-4 pt-4">
-                <button className="flex-1 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:shadow-lg transition-all">
+                <button className="flex-1 py-4 bg-gradient-to-r from-blue-600 to-sky-500 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:shadow-lg transition-all">
                   Register Now
                 </button>
                 <button className="flex-1 py-4 bg-slate-100 text-slate-900 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-200 transition-all">

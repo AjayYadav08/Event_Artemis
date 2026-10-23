@@ -48,17 +48,17 @@ const TeamRequests: React.FC<TeamRequestsProps> = ({
                        <div className="flex items-center gap-2">
                           <button 
                             onClick={() => handleRejectRequest(request)}
-                            className="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100 transition-colors flex items-center justify-center"
+                            className="w-10 h-10 rounded-2xl border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-200 text-slate-500 hover:text-rose-600 transition-all flex items-center justify-center shadow-sm"
                             title="Reject"
                           >
-                            <X className="w-5 h-5" />
+                            <X className="w-4 h-4" />
                           </button>
                           <button 
                             onClick={() => handleAcceptRequest(request)}
-                            className="w-10 h-10 rounded-xl bg-emerald-500 text-white hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-100 flex items-center justify-center"
+                            className="w-10 h-10 rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 transition-all shadow-sm flex items-center justify-center"
                             title="Accept"
                           >
-                            <Check className="w-5 h-5" />
+                            <Check className="w-4 h-4 stroke-[2.5]" />
                           </button>
                        </div>
                     </div>
