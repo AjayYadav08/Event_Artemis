@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flame, Clock, History, SearchX, Sparkles } from 'lucide-react';
 import { CampusEvent } from '../types';
-import SearchFilters from './SearchFilters';
 import EventGrid from './EventGrid';
 
 interface EventsDiscoveryProps {
@@ -44,15 +43,6 @@ const EventsDiscovery: React.FC<EventsDiscoveryProps> = (props) => {
 
   return (
     <div className="space-y-12 px-8 pb-32">
-      <SearchFilters 
-        showTeamsView={showTeamsView}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-        activeNav={activeNav}
-        setActiveNav={setActiveNav}
-      />
 
       {totalResults === 0 ? (
         <div className="flex flex-col items-center justify-center pt-16 pb-40 text-center animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out">

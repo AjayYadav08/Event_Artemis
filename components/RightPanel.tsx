@@ -43,7 +43,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({ setActiveTab }) => {
   ];
 
   return (
-    <aside className="w-[380px] border-l border-slate-200 bg-white flex flex-col h-full shrink-0 overflow-y-auto">
+    <aside className="w-[360px] border-l border-slate-200 bg-white flex flex-col h-full shrink-0 overflow-y-auto">
       <div className="p-6 space-y-8">
         
         {/* Live Challenge Card */}

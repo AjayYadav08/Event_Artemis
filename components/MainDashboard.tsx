@@ -123,7 +123,7 @@ export const MainDashboard: React.FC = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 h-full overflow-y-auto p-8">
+    <div className="max-w-6xl mx-auto space-y-6 h-full overflow-y-auto p-6 lg:p-7">
       {/* Date Strip Header - Dark Theme */}
       <div className="bg-[#09090b] p-4 rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between mb-4 px-2">

@@ -1192,6 +1192,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({
         teams={teams}
         showCreateTeamForm={showCreateTeamForm}
         showJoinTeamView={showJoinTeamView}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        activeNav={activeNav}
+        setActiveNav={setActiveNav}
       />
 
       {showTeamsView && (

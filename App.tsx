@@ -7,7 +7,6 @@ import { RightPanel } from './components/RightPanel';
 import { FullCalendarPage } from './components/FullCalendarPage';
 import { EventsPage, EVENTS_MOCK, CampusEvent } from './components/EventsPage';
 import { MiniFloatingCalendar } from './components/MiniFloatingCalendar';
-import { LoginPage } from './components/LoginPage';
 import { MessageSquareWarning, Ghost, ArrowRight, X, Radio, BellRing, Layout } from 'lucide-react';
 
 import { TutorialProvider, useTutorial } from './components/tutorial/TutorialContext';
@@ -47,12 +46,6 @@ const MainApp: React.FC = () => {
   const [isMiniCalendarOpen, setIsMiniCalendarOpen] = useState(false);
   const [selectedGlobalDate, setSelectedGlobalDate] = useState<number | null>(null);
   const [exploringEventId, setExploringEventId] = useState<string | null>(null);
-
-  // Removed auto-trigger from Home tab to avoid showing tutorial on Dashboard
-  // Tutorial will now start specifically when entering the Events Arena after the loader.
-  
-  // Transition State for Events Tab
-  const [showEventsSplash, setShowEventsSplash] = useState(false);
 
   // State to track if we are in a deep detail view (to hide navbars)
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -99,24 +92,16 @@ const MainApp: React.FC = () => {
     }
 
     if (tab === 'Events' && activeTab !== 'Events') {
-      // Trigger the Splash Screen Transition for Events
-      setShowEventsSplash(true);
+      setActiveTab('Events');
+      setTimeout(() => {
+        startFlow('homepage');
+      }, 800);
     } else if (tab === 'Events' && activeTab === 'Events') {
       // Already on Events — remount page to reset all state (soft refresh)
       setEventsPageKey(k => k + 1);
     } else {
       setActiveTab(tab);
     }
-  };
-
-  const handleSplashComplete = () => {
-    setShowEventsSplash(false);
-    setActiveTab('Events');
-    
-    // Start the homepage/onboarding tutorial after a short delay for smooth UX
-    setTimeout(() => {
-      startFlow('homepage');
-    }, 800); 
   };
 
   const handleEventView = (id: string) => {
@@ -399,13 +384,8 @@ const MainApp: React.FC = () => {
     }
   };
 
-  // INTERSTITIAL SPLASH SCREEN FOR EVENTS
-  if (showEventsSplash) {
-    return <LoginPage onLogin={handleSplashComplete} loadingText="Accessing Events Arena..." />;
-  }
-
   return (
-    <div className="flex h-screen w-full bg-[#fcfdfe] overflow-hidden text-slate-700 relative selection:bg-blue-100 selection:text-blue-900">
+    <div className="flex flex-col h-screen w-full bg-white overflow-hidden text-slate-700 relative selection:bg-blue-100 selection:text-blue-900">
       
       {/* GLOBAL TOAST CONTAINER */}
       <div className="fixed top-20 right-6 z-[10001] flex flex-col gap-4 pointer-events-none w-96 perspective-[2000px]">
@@ -529,31 +509,31 @@ const MainApp: React.FC = () => {
       `}} />
 
       {!isDetailsOpen && (
-        <Sidebar 
-          activeTab={activeTab} 
-          setActiveTab={handleTabChange} 
-          unopenedEventsCount={unopenedEventsCount}
+        <TopBar 
+          notifications={notifications}
+          onNotificationClick={(eventId) => {
+            // Ensure we transition to Events tab if not already there
+            if (activeTab !== 'Events') {
+              handleTabChange('Events');
+            }
+            setExploringEventId(eventId);
+            handleEventView(eventId);
+          }}
+          onClearNotifications={clearNotifications}
+          onMarkRead={markNotificationsRead}
         />
       )}
-      
-      <div className="flex-1 flex flex-col min-w-0 transition-all ">
+
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         {!isDetailsOpen && (
-          <TopBar 
-            notifications={notifications}
-            onNotificationClick={(eventId) => {
-              // Ensure we transition to Events tab if not already there
-              if (activeTab !== 'Events') {
-                handleTabChange('Events');
-              }
-              setExploringEventId(eventId);
-              handleEventView(eventId);
-            }}
-            onClearNotifications={clearNotifications}
-            onMarkRead={markNotificationsRead}
+          <Sidebar 
+            activeTab={activeTab} 
+            setActiveTab={handleTabChange} 
+            unopenedEventsCount={unopenedEventsCount}
           />
         )}
         
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 min-w-0 overflow-hidden">
           <main className="flex-1 min-w-0 bg-[#f8fafc]/50 relative overflow-hidden">
             {renderContent()}
           </main>
