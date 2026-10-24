@@ -715,7 +715,8 @@ export const MOCK_TEAMS: Team[] = [
       { id: '2', senderId: 'me', senderName: 'Ajay', text: 'Awesome! I am working on the frontend integration.', timestamp: '10:35 AM', isMe: true },
       { id: '3', senderId: 'p4', senderName: 'Timothee', text: 'I found a better dataset for the fine-tuning.', timestamp: '10:40 AM', isMe: false },
       { id: '4', senderId: 'p1', senderName: 'Zoe', text: 'Great! Should I start setting up the API endpoints?', timestamp: '10:42 AM', isMe: false },
-      { id: '5', senderId: 'me', senderName: 'Ajay', text: 'Yes, Zoe. Let\'s use FastAPI for that.', timestamp: '10:45 AM', isMe: true }
+      { id: '5', senderId: 'me', senderName: 'Ajay', text: 'Yes, Zoe. Let\'s use FastAPI for that.', timestamp: '10:45 AM', isMe: true },
+      { id: '6', senderId: 'p1', senderName: 'Zoe', text: '🎙️ Voice message (0:04)', timestamp: '10:48 AM', isMe: false, audioDuration: 4 }
     ]
   },
   {
@@ -892,15 +893,18 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   );
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const sendMessage = useCallback(() => {
-    if (!chatInput.trim() || !activeTeam) return;
+  const sendMessage = useCallback((customText?: string, audioData?: { url?: string; duration?: number }) => {
+    const textToSend = customText !== undefined ? customText : chatInput;
+    if (!textToSend.trim() || !activeTeam) return;
     const newMsg: ChatMessage = {
       id: `msg_${Date.now()}`,
       senderId: 'me',
       senderName: 'Ajay',
-      text: chatInput.trim(),
+      text: textToSend.trim(),
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       isMe: true,
+      audioUrl: audioData?.url,
+      audioDuration: audioData?.duration,
     };
     setTeamMessages(prev => ({ ...prev, [activeTeam.id]: [...(prev[activeTeam.id] || []), newMsg] }));
     setChatInput('');
@@ -1182,7 +1186,9 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       ref={scrollContainerRef}
       onScroll={handleScroll}
       style={{ willChange: 'transform' }}
-      className={`flex-1 flex flex-col transition-all pb-32 ${isCalendarOpen ? 'pr-[320px]' : ''} max-w-7xl mx-auto w-full h-full overflow-y-auto relative`}
+      className={`flex-1 flex flex-col transition-all ${
+        activeTeam ? 'overflow-hidden pb-2' : 'pb-32 overflow-y-auto'
+      } ${isCalendarOpen ? 'pr-[320px]' : ''} max-w-7xl mx-auto w-full h-full relative`}
     >
       {/* Background Decorative Accents */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-50/30 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
@@ -1213,7 +1219,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
       />
 
       {showTeamsView && (
-        <div className="px-4 mt-1    ">
+        <div className={`px-4 mt-1 ${activeTeam ? 'flex-1 min-h-0 flex flex-col overflow-hidden pb-1' : ''}`}>
           <TeamPortal 
             availableEvents={EVENTS_MOCK}
             activeTeam={activeTeam}

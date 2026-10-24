@@ -92,6 +92,8 @@ export interface ChatMessage {
   text: string;
   timestamp: string;
   isMe: boolean;
+  audioUrl?: string;
+  audioDuration?: number;
 }
 
 export interface Team {
